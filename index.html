@@ -609,7 +609,7 @@
       font-weight: 600;
     }
 
-    /* Botón desplegable */
+    /* Botón desplegable (compartido por ambos menús) */
     .race-card-toggle {
       display: inline-flex;
       align-items: center;
@@ -625,6 +625,8 @@
       transition: all 0.15s ease;
       line-height: 1;
       user-select: none;
+      margin-right: 6px;
+      margin-bottom: 4px;
     }
 
     .race-card-toggle:hover {
@@ -680,6 +682,16 @@
     }
 
     .race-card-details ul li strong {
+      color: var(--primary-color);
+    }
+
+    /* Datos de distancia/desnivel */
+    .race-card-details .data-line {
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .race-card-details .data-line strong {
       color: var(--primary-color);
     }
 
@@ -866,7 +878,9 @@
         titulua: "Aia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/aiako-mendi-lasterketa-247869309?h=5m6vod4qaz&wa=so"
-              data-instagram="https://www.instagram.com/aiako.mendi.lasterketa/">
+              data-instagram="https://www.instagram.com/aiako.mendi.lasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Aiako Mendi Lasterketa
           </h3>
           <ul>
@@ -887,7 +901,9 @@
         titulua: "Andoain", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/sorabilla-trail-2026-271405054"
-              data-instagram="https://www.instagram.com/sorabillatrail/">
+              data-instagram="https://www.instagram.com/sorabillatrail/"
+              data-distantzia=""
+              data-desnibela="">
             Sorabilla Mendi Lasterketa
           </h3>
           <ul>
@@ -900,7 +916,9 @@
         titulua: "Antzuola", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/antzuolako-8-miliak-ibilbidea-2026-248848763"
-              data-instagram="https://www.instagram.com/antzuolako8m/">
+              data-instagram="https://www.instagram.com/antzuolako8m/"
+              data-distantzia=""
+              data-desnibela="">
             Antzuolako 8 Miliak
           </h3>
           <ul>
@@ -915,7 +933,9 @@
         titulua: "Aretxabaleta", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-senderismo/ikazkin-trail-2023-aretxabaleta-146494560"
-              data-instagram="https://www.instagram.com/ikazkin_trail/">
+              data-instagram="https://www.instagram.com/ikazkin_trail/"
+              data-distantzia=""
+              data-desnibela="">
             Ikazkin Trail
           </h3>
           <ul>
@@ -929,7 +949,9 @@
         titulua: "Asteasu", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/goiballara-letea-119808048"
-              data-instagram="https://www.instagram.com/anttine_elkartea/">
+              data-instagram="https://www.instagram.com/anttine_elkartea/"
+              data-distantzia=""
+              data-desnibela="">
             Anttine Trail (Kronoeskalada)
           </h3>
           <ul>
@@ -943,7 +965,9 @@
         titulua: "Astigarraga", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/basatrail-17km-2026-288195144"
-              data-instagram="https://www.instagram.com/basatrail/">
+              data-instagram="https://www.instagram.com/basatrail/"
+              data-distantzia=""
+              data-desnibela="">
             Basatrail Mendi Lasterketa
           </h3>
           <ul>
@@ -959,7 +983,9 @@
         titulua: "Beasain", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/marimurumendi-2024-177333684"
-              data-instagram="https://www.instagram.com/marimurumendi/">
+              data-instagram="https://www.instagram.com/marimurumendi/"
+              data-distantzia=""
+              data-desnibela="">
             Marimurumendi
           </h3>
           <ul>
@@ -968,7 +994,9 @@
             <li><strong>2027 (X):</strong> Uztailak 10</li>
           </ul>
           <h3 data-track="https://es.wikiloc.com/rutas-senderismo/bealak-trail-luzea-197508320"
-              data-instagram="https://www.instagram.com/bealak_taldea/">
+              data-instagram="https://www.instagram.com/bealak_taldea/"
+              data-distantzia=""
+              data-desnibela="">
             Bealak Trail
           </h3>
           <ul>
@@ -976,7 +1004,9 @@
             <li><strong>2026 (II):</strong> Martxoak 15</li>
           </ul>
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/12-garin-mendi-lasterketa-244114319"
-              data-instagram="https://www.instagram.com/garin_mendi_lasterketa/">
+              data-instagram="https://www.instagram.com/garin_mendi_lasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Garin Mendi Lasterketa
           </h3>
           <ul>
@@ -992,7 +1022,9 @@
         titulua: "Berastegi", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/negu-trail-2024-159254779"
-              data-instagram="https://www.instagram.com/negutrail/">
+              data-instagram="https://www.instagram.com/negutrail/"
+              data-distantzia=""
+              data-desnibela="">
             Negu Trail Mendi Lasterketa
           </h3>
           <ul>
@@ -1010,7 +1042,9 @@
         titulua: "Deba", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/zuhatza-trail-260375440"
-              data-instagram="https://www.instagram.com/zuhatzadeba/">
+              data-instagram="https://www.instagram.com/zuhatzadeba/"
+              data-distantzia=""
+              data-desnibela="">
             Zuhatza Mendi Lasterketa
           </h3>
           <ul>
@@ -1022,7 +1056,9 @@
         titulua: "Donostia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/txirrita-mendi-lasterketa-129229071"
-              data-instagram="https://www.instagram.com/txirrita_mendi_lasterketa/">
+              data-instagram="https://www.instagram.com/txirrita_mendi_lasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Txirrita Mendi Lasterketa
           </h3>
           <ul>
@@ -1036,7 +1072,9 @@
         titulua: "Eibar", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/galdaramino-igoera-2024-138208837"
-              data-instagram="https://www.instagram.com/galdaraminolasterketa/">
+              data-instagram="https://www.instagram.com/galdaraminolasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Galdaramiño Igoera
           </h3>
           <ul>
@@ -1053,7 +1091,9 @@
         titulua: "Errenteria", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/urdaburu-malbazar-y-aldura-desde-listorreta-166903008"
-              data-instagram="https://www.instagram.com/landarbasotrail/">
+              data-instagram="https://www.instagram.com/landarbasotrail/"
+              data-distantzia=""
+              data-desnibela="">
             Landarbaso Trail
           </h3>
           <ul>
@@ -1070,7 +1110,9 @@
         titulua: "Gabiria", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/leharrei-mendi-lasterketa-2026-259823415"
-              data-instagram="https://www.instagram.com/leharrei/">
+              data-instagram="https://www.instagram.com/leharrei/"
+              data-distantzia=""
+              data-desnibela="">
             Leharrei Mendi Lasterketa
           </h3>
           <ul>
@@ -1079,7 +1121,9 @@
             <li><strong>2026 (IX):</strong> Apirilak 18</li>
           </ul>
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/aztiriko-mendi-lasterketa-2026-274915368"
-              data-instagram="https://www.instagram.com/aztiriko_ml/">
+              data-instagram="https://www.instagram.com/aztiriko_ml/"
+              data-distantzia=""
+              data-desnibela="">
             Aztiriko Mendi Lasterketa
           </h3>
           <ul>
@@ -1096,7 +1140,9 @@
         titulua: "Hernani", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-senderismo/erenotzuko-mendi-lasterketa-92137990"
-              data-instagram="https://www.instagram.com/axeriak_mlt/">
+              data-instagram="https://www.instagram.com/axeriak_mlt/"
+              data-distantzia=""
+              data-desnibela="">
             Ereñotzuko Mendi Lasterketa
           </h3>
           <ul>
@@ -1111,7 +1157,9 @@
         titulua: "Hondarribia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/donostia-hondarribia-talaia-bidea-2024-164953238"
-              data-instagram="https://www.instagram.com/cdfortunake">
+              data-instagram="https://www.instagram.com/cdfortunake"
+              data-distantzia=""
+              data-desnibela="">
             Donostia-Hondarribia Talaia Bidea
           </h3>
           <ul>
@@ -1120,7 +1168,9 @@
             <li><strong>2026 (XIV):</strong> Martxoak 22</li>
           </ul>
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/2-benat-elzo-mendi-lasterketa-10884131"
-              data-instagram="https://www.instagram.com/benatelzomendilasterketa/">
+              data-instagram="https://www.instagram.com/benatelzomendilasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Beñat Elzo Mendi Lasterketa
           </h3>
           <ul>
@@ -1134,7 +1184,9 @@
         titulua: "Ibarra", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/zazpibide-trail-2026-262206815"
-              data-instagram="https://www.instagram.com/zazpibidetrail/">
+              data-instagram="https://www.instagram.com/zazpibidetrail/"
+              data-distantzia=""
+              data-desnibela="">
             Zazpibide Trail
           </h3>
           <ul>
@@ -1147,7 +1199,9 @@
         titulua: "Idiazabal", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-senderismo/axari-trail-idiazabal-111250426"
-              data-instagram="https://www.instagram.com/axaritrailml/">
+              data-instagram="https://www.instagram.com/axaritrailml/"
+              data-distantzia=""
+              data-desnibela="">
             Axari Trail
           </h3>
           <ul>
@@ -1166,7 +1220,9 @@
         titulua: "Lasarte-Oria", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/lasarte-oriako-mendi-lasterketa-2023-track-berria-nuevo-track-139521086"
-              data-instagram="https://www.instagram.com/lasarteoriatrail/">
+              data-instagram="https://www.instagram.com/lasarteoriatrail/"
+              data-distantzia=""
+              data-desnibela="">
             Lasarte-Oriako Mendi Lasterketa
           </h3>
           <ul>
@@ -1180,7 +1236,9 @@
         titulua: "Lazkao", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/batala-lazkao-lasterketa-269116782"
-              data-instagram="https://www.instagram.com/batala30km/">
+              data-instagram="https://www.instagram.com/batala30km/"
+              data-distantzia=""
+              data-desnibela="">
             Batala Mendi Lasterketa
           </h3>
           <ul>
@@ -1193,7 +1251,9 @@
         titulua: "Legazpi", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/korosti-trail-luzea-ktl-luzea-286297250"
-              data-instagram="https://www.instagram.com/korostitrail/">
+              data-instagram="https://www.instagram.com/korostitrail/"
+              data-distantzia=""
+              data-desnibela="">
             Korosti Trail
           </h3>
           <ul>
@@ -1208,7 +1268,9 @@
         titulua: "Lezo", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/lezo-jaizkibel-mendi-lasterketa-12481845"
-              data-instagram="https://www.instagram.com/lezo_jaizkibelml/">
+              data-instagram="https://www.instagram.com/lezo_jaizkibelml/"
+              data-distantzia=""
+              data-desnibela="">
             Lezo-Jaizkibel Mendi Lasterketa
           </h3>
           <ul>
@@ -1223,7 +1285,9 @@
         titulua: "Mendaro", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/kilimon-trail-2026-23k-259938968"
-              data-instagram="https://www.instagram.com/kilimontrail/">
+              data-instagram="https://www.instagram.com/kilimontrail/"
+              data-distantzia=""
+              data-desnibela="">
             Kilimon Trail
           </h3>
           <ul>
@@ -1239,7 +1303,9 @@
         titulua: "Oiartzun", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-senderismo/intxixu-trail-20-12-2020-62531994"
-              data-instagram="https://www.instagram.com/intxixutrail/">
+              data-instagram="https://www.instagram.com/intxixutrail/"
+              data-distantzia=""
+              data-desnibela="">
             Intxixu Trail
           </h3>
           <ul>
@@ -1255,7 +1321,9 @@
         titulua: "Ordizia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/ordiziako-mendi-lasterketa-2025-02-16-202067423"
-              data-instagram="https://www.instagram.com/ordizia.mendilasterketa/">
+              data-instagram="https://www.instagram.com/ordizia.mendilasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Ordiziako Mendi Lasterketa
           </h3>
           <ul>
@@ -1269,7 +1337,9 @@
         titulua: "Orendain", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/eltxo-trail-2026-lasterketa-luzea-288698109"
-              data-instagram="https://www.instagram.com/eltxotrail/">
+              data-instagram="https://www.instagram.com/eltxotrail/"
+              data-distantzia=""
+              data-desnibela="">
             Eltxo Trail
           </h3>
           <ul>
@@ -1284,7 +1354,9 @@
         titulua: "Orio", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/talaimendi-trail-2025-216069886"
-              data-instagram="https://www.instagram.com/talaimendim.elkartea/">
+              data-instagram="https://www.instagram.com/talaimendim.elkartea/"
+              data-distantzia=""
+              data-desnibela="">
             Talaimendi Trail
           </h3>
           <ul>
@@ -1299,7 +1371,9 @@
         titulua: "Pasaia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/molino-trail-263383669"
-              data-instagram="https://www.instagram.com/molinotrail/">
+              data-instagram="https://www.instagram.com/molinotrail/"
+              data-distantzia=""
+              data-desnibela="">
             Moliño Trail
           </h3>
           <ul>
@@ -1311,7 +1385,9 @@
         titulua: "Segura", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/segura-zerain-trail-sanson-proba-13361699"
-              data-instagram="https://www.instagram.com/sansonproba/">
+              data-instagram="https://www.instagram.com/sansonproba/"
+              data-distantzia=""
+              data-desnibela="">
             Sanson Proba / Segura-Zerain
           </h3>
           <ul>
@@ -1326,7 +1402,9 @@
         titulua: "Tolosa", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/t2t-133911110"
-              data-instagram="https://www.instagram.com/t3tmaratoia/">
+              data-instagram="https://www.instagram.com/t3tmaratoia/"
+              data-distantzia=""
+              data-desnibela="">
             T2T
           </h3>
           <ul>
@@ -1335,7 +1413,9 @@
             <li><strong>2026 (XI):</strong> Ekainak 14</li>
           </ul>
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/ix-tolosaldeko-hiru-tontorrak-t3t-mendi-maratoia-42k-2800m-ernio-uzturre-erroizpe-16-06-24-174486861"
-              data-instagram="https://www.instagram.com/t3tmaratoia/">
+              data-instagram="https://www.instagram.com/t3tmaratoia/"
+              data-distantzia=""
+              data-desnibela="">
             T3T
           </h3>
           <ul>
@@ -1349,7 +1429,9 @@
         titulua: "Urnieta", province: "Gipuzkoa",
         edukia: `
           <h3 data-track=""
-              data-instagram="https://www.instagram.com/poxtatrail/">
+              data-instagram="https://www.instagram.com/poxtatrail/"
+              data-distantzia=""
+              data-desnibela="">
             Poxta Trail
           </h3>
           <ul>
@@ -1362,7 +1444,9 @@
         titulua: "Usurbil", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://es.wikiloc.com/rutas-carrera-por-montana/uxue-trail-2026-251502863"
-              data-instagram="https://www.instagram.com/uxuetrail_2026">
+              data-instagram="https://www.instagram.com/uxuetrail_2026"
+              data-distantzia=""
+              data-desnibela="">
             Uxue Trail
           </h3>
           <ul>
@@ -1376,7 +1460,9 @@
         titulua: "Amasa-Villabona", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/running-trails/triku-harri-24k-2025-220031998"
-              data-instagram="https://www.instagram.com/trikuharrimendilasterketa">
+              data-instagram="https://www.instagram.com/trikuharrimendilasterketa"
+              data-distantzia=""
+              data-desnibela="">
             Trikuharri Mendi Lasterketa
           </h3>
           <ul>
@@ -1385,7 +1471,9 @@
             <li><strong>2026 (V):</strong> Ekainak 27</li>
           </ul>
           <h3 data-track=""
-              data-instagram="https://www.instagram.com/martina_kultur_elkartea/">
+              data-instagram="https://www.instagram.com/martina_kultur_elkartea/"
+              data-distantzia=""
+              data-desnibela="">
             Loatzoko Igoera-Jaitsiera
           </h3>
           <ul>
@@ -1399,7 +1487,9 @@
         titulua: "Zaldibia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/zaldibiako-mendi-lasterketa-luzea-28km-31427707"
-              data-instagram="https://www.instagram.com/zaldibiakoml/">
+              data-instagram="https://www.instagram.com/zaldibiakoml/"
+              data-distantzia=""
+              data-desnibela="">
             Zaldibiako Mendi Lasterketa
           </h3>
           <ul>
@@ -1413,7 +1503,9 @@
         titulua: "Zarautz", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/pagoeta-mendi-lasterketa-2025-207402732"
-              data-instagram="https://www.instagram.com/pagoetamendilasterketazarautz">
+              data-instagram="https://www.instagram.com/pagoetamendilasterketazarautz"
+              data-distantzia=""
+              data-desnibela="">
             Pagoeta Mendi Lasterketa
           </h3>
           <ul>
@@ -1429,7 +1521,9 @@
         titulua: "Zestoa", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/kobaz-koba-trail-2025-200903705"
-              data-instagram="https://www.instagram.com/kobazkobatrail/">
+              data-instagram="https://www.instagram.com/kobazkobatrail/"
+              data-distantzia=""
+              data-desnibela="">
             Kobaz Koba Trail
           </h3>
           <ul>
@@ -1445,7 +1539,9 @@
         titulua: "Zumaia", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/running-trails/2023-flysch-trail-ibilbide-luzea-143292919"
-              data-instagram="https://www.instagram.com/zumaiaflyschtrail/">
+              data-instagram="https://www.instagram.com/zumaiaflyschtrail/"
+              data-distantzia=""
+              data-desnibela="">
             Flysch Trail
           </h3>
           <ul>
@@ -1459,7 +1555,9 @@
         titulua: "Zumarraga", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/uz-trail-2019-33748209"
-              data-instagram="https://www.instagram.com/uztrail/">
+              data-instagram="https://www.instagram.com/uztrail/"
+              data-distantzia=""
+              data-desnibela="">
             UZ Trail
           </h3>
           <ul>
@@ -1473,7 +1571,9 @@
         titulua: "Arrasate", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/running-trails/arrasate-udalatx-mendi-lasterketa-2026-249931669"
-              data-instagram="https://www.instagram.com/arrasateudalatx/">
+              data-instagram="https://www.instagram.com/arrasateudalatx/"
+              data-distantzia=""
+              data-desnibela="">
             Arrasate Udalatx
           </h3>
           <ul>
@@ -1488,7 +1588,9 @@
         titulua: "Leintz-Gatzaga", province: "Gipuzkoa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/collado-anguta-makatzgain-y-santuario-de-dorleta-desde-leintz-gatzaga-240308124"
-              data-instagram="https://www.instagram.com/gatzatrail/">
+              data-instagram="https://www.instagram.com/gatzatrail/"
+              data-distantzia=""
+              data-desnibela="">
             Gatza Trail
           </h3>
           <ul>
@@ -1503,7 +1605,9 @@
         titulua: "Bera", province: "Nafarroa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/berako-mendi-maratoi-erdia-2026-284262885"
-              data-instagram="https://www.instagram.com/manttale_team/">
+              data-instagram="https://www.instagram.com/manttale_team/"
+              data-distantzia=""
+              data-desnibela="">
             Berako Mendi Maratoi Erdia
           </h3>
           <ul>
@@ -1518,7 +1622,9 @@
         titulua: "Lesaka", province: "Nafarroa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/lesakako-mendi-lasterketa-2026-245724418"
-              data-instagram="https://www.instagram.com/lml_lesakakomendilasterketa/">
+              data-instagram="https://www.instagram.com/lml_lesakakomendilasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Lesakako Mendi Lasterketa
           </h3>
           <ul>
@@ -1533,7 +1639,9 @@
         titulua: "Arantza", province: "Nafarroa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/hiking-trails/arantzako-mendi-lasterketa-66858702"
-              data-instagram="https://www.instagram.com/arantzakomendilasterketa/">
+              data-instagram="https://www.instagram.com/arantzakomendilasterketa/"
+              data-distantzia=""
+              data-desnibela="">
             Arantzako Mendi Lasterketa
           </h3>
           <ul>
@@ -1548,7 +1656,9 @@
         titulua: "Zubieta", province: "Nafarroa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/hiking-trails/zubietako-mendi-lasterketa-2025-219268596"
-              data-instagram="https://www.instagram.com/zubietakogazteak/">
+              data-instagram="https://www.instagram.com/zubietakogazteak/"
+              data-distantzia=""
+              data-desnibela="">
             Zubietako Mendi Lasterketa
           </h3>
           <ul>
@@ -1561,7 +1671,9 @@
         titulua: "Otsagabia", province: "Nafarroa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/irati-trail-77335676"
-              data-instagram="https://www.instagram.com/iratitrail/">
+              data-instagram="https://www.instagram.com/iratitrail/"
+              data-distantzia=""
+              data-desnibela="">
             Irati Trail
           </h3>
           <ul>
@@ -1576,7 +1688,9 @@
         titulua: "Goizueta", province: "Nafarroa",
         edukia: `
           <h3 data-track="https://www.wikiloc.com/trail-running-trails/goizutrail-luzea-25km-169796412"
-              data-instagram="https://www.instagram.com/goizutrail/">
+              data-instagram="https://www.instagram.com/goizutrail/"
+              data-distantzia=""
+              data-desnibela="">
             Goizutrail
           </h3>
           <ul>
@@ -1601,7 +1715,7 @@
       return races;
     }
 
-    /* 📊 Extrae las carreras con sus fechas de un municipio */
+    /* 📊 Extrae las carreras con sus fechas y datos de un municipio */
     function parseTownRaces(townData) {
       const result = [];
       if (!townData.edukia) return result;
@@ -1614,6 +1728,8 @@
         const raceName = h3.textContent.trim();
         const trackUrl = h3.getAttribute('data-track') || '';
         const instaUrl = h3.getAttribute('data-instagram') || '';
+        const distantzia = h3.getAttribute('data-distantzia') || '';
+        const desnibela = h3.getAttribute('data-desnibela') || '';
         const ul = h3.nextElementSibling;
         const dates = [];
 
@@ -1630,7 +1746,7 @@
           });
         }
 
-        result.push({ raceName, trackUrl, instaUrl, dates });
+        result.push({ raceName, trackUrl, instaUrl, distantzia, desnibela, dates });
       });
 
       return result;
@@ -1649,10 +1765,7 @@
       const races = parseTownRaces(townData);
 
       races.forEach(race => {
-        // Ordenar fechas de más reciente a más antigua
         const sortedDates = race.dates.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year));
-
-        // Buscar específicamente el año 2027
         const date2027 = race.dates.find(d => d.year === "2027" && d.dateStr && d.dateStr !== "-");
 
         const card = document.createElement('div');
@@ -1711,7 +1824,7 @@
         }
         card.appendChild(latestEl);
 
-        // Botón desplegable (últimos 3 años registrados, sin 2027)
+        // Botón desplegable "Azken urteak"
         const otherDates = sortedDates.filter(d => d.year !== "2027");
         const lastThree = otherDates.slice(0, 3);
 
@@ -1739,6 +1852,31 @@
           card.appendChild(toggleBtn);
           card.appendChild(details);
         }
+
+        // Botón desplegable "Datuak" (Distantzia + Desnibela)
+        const dataToggleBtn = document.createElement('button');
+        dataToggleBtn.type = 'button';
+        dataToggleBtn.className = 'race-card-toggle';
+        dataToggleBtn.innerHTML = `<span>Datuak</span><span class="arrow">▾</span>`;
+
+        const dataDetails = document.createElement('div');
+        dataDetails.className = 'race-card-details';
+
+        const distantziaVal = race.distantzia && race.distantzia.trim() !== "" ? race.distantzia : "-";
+        const desnibelaVal = race.desnibela && race.desnibela.trim() !== "" ? race.desnibela : "-";
+
+        dataDetails.innerHTML = `
+          <div class="data-line"><strong>Distantzia:</strong> ${distantziaVal}</div>
+          <div class="data-line"><strong>Desnibela:</strong> ${desnibelaVal}</div>
+        `;
+
+        dataToggleBtn.addEventListener('click', () => {
+          const isOpen = dataDetails.classList.toggle('open');
+          dataToggleBtn.classList.toggle('open', isOpen);
+        });
+
+        card.appendChild(dataToggleBtn);
+        card.appendChild(dataDetails);
 
         sidebarContent.appendChild(card);
       });
