@@ -211,11 +211,31 @@
       color: #3f4440;
       transition: background 0.15s, color 0.15s;
       border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
 
     .udalerri-li:hover {
       background-color: var(--bg-color);
       color: var(--primary-color);
+    }
+
+    .race-item-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--primary-color);
+    }
+
+    .race-item-town {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--bg-color);
+      color: #5c554c;
+      padding: 2px 7px;
+      border-radius: 2px;
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
     }
 
     /* 🗓️ Vista Egutegia Matriz Visual (Inicia activa) */
@@ -1419,6 +1439,19 @@
       }
     };
 
+    /* Extrae todas las carreras de un municipio (para la vista Zerrenda) */
+    function getRacesFromTown(townData) {
+      const races = [];
+      if (!townData.edukia) return races;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = townData.edukia;
+      tempDiv.querySelectorAll('h3').forEach(h3 => {
+        const name = h3.textContent.trim();
+        if (name) races.push(name);
+      });
+      return races;
+    }
+
     function addRaceButtons() {
       const h3List = sidebarContent.querySelectorAll('h3');
       h3List.forEach(h3 => {
@@ -1506,26 +1539,45 @@
         mapContainer.innerHTML = `<p style="color:red;">Errorea mapa.svg kargatzean.</p>`;
       });
 
-    // Renderizar Lista filtrada por provincia y buscador
+    /* 📋 Renderizar lista de CARRERAS filtrada por provincia y buscador */
     function renderList(filter = "", province = "Gipuzkoa") {
       udalerriUl.innerHTML = "";
       const sortedKeys = Object.keys(udalerriDatuak).sort((a, b) => a.localeCompare(b));
 
+      const races = [];
       sortedKeys.forEach(key => {
         const item = udalerriDatuak[key];
-        const matchesProvince = item.province === province;
-        const matchesSearch = item.titulua.toLowerCase().includes(filter.toLowerCase());
-
-        if (matchesProvince && matchesSearch) {
-          const li = document.createElement('li');
-          li.className = 'udalerri-li';
-          li.textContent = item.titulua;
-          li.addEventListener('click', (e) => {
-            e.stopPropagation();
-            selectUdalerria(key);
+        if (item.province !== province) return;
+        const townRaces = getRacesFromTown(item);
+        townRaces.forEach(raceName => {
+          races.push({
+            townKey: key,
+            townTitle: item.titulua,
+            raceName: raceName
           });
-          udalerriUl.appendChild(li);
-        }
+        });
+      });
+
+      const filtered = races.filter(r => {
+        const term = filter.toLowerCase();
+        return r.raceName.toLowerCase().includes(term) ||
+               r.townTitle.toLowerCase().includes(term);
+      });
+
+      filtered.sort((a, b) => a.raceName.localeCompare(b.raceName));
+
+      filtered.forEach(r => {
+        const li = document.createElement('li');
+        li.className = 'udalerri-li';
+        li.innerHTML = `
+          <span class="race-item-name">${r.raceName}</span>
+          <span class="race-item-town">${r.townTitle}</span>
+        `;
+        li.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectUdalerria(r.townKey);
+        });
+        udalerriUl.appendChild(li);
       });
     }
 
@@ -1723,6 +1775,8 @@
       mapContainer.style.display = 'none';
       listContainer.style.display = 'flex';
       calendarContainer.style.display = 'none';
+
+      renderList(searchInput.value, provinceSelect.value);
     });
 
     btnCalendar.addEventListener('click', () => {
