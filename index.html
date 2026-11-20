@@ -432,6 +432,10 @@
       font-size: 1.2rem;
       margin: 1.2rem 0 0.6rem 0;
       color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .race-link {
@@ -450,6 +454,47 @@
     .sidebar-content ul {
       margin-left: 1.25rem;
       margin-bottom: 1rem;
+    }
+
+    /* 🥾 Botón Track (mantiene estética web, tamaño reducido) */
+    .track-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px 3px 7px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .track-btn:hover {
+      background: var(--accent-color);
+      color: #faf7f2;
+      border-color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .track-btn img {
+      width: 14px;
+      height: 14px;
+      display: block;
+      object-fit: contain;
+      transition: filter 0.15s ease;
+    }
+
+    .track-btn:hover img {
+      filter: brightness(0) invert(1);
     }
 
     /* Tooltip */
@@ -634,7 +679,8 @@
             <li><strong>2025 (XIV):</strong> Martxoak 2</li>
             <li><strong>2026 (XV):</strong> Martxoak 1</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Aizarnazabal": { titulua: "Aizarnazabal", province: "Gipuzkoa", edukia: "" },
       "Albiztur": { titulua: "Albiztur", province: "Gipuzkoa", edukia: "" },
@@ -652,7 +698,8 @@
           <ul>
             <li><strong>2026 (I):</strong> Abuztuak 29</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Anoeta": { titulua: "Anoeta", province: "Gipuzkoa", edukia: "" },
       "Antzuola": { 
@@ -666,7 +713,8 @@
             <li><strong>2025 (VII):</strong> Otsailak 22</li>
             <li><strong>2026 (VIII):</strong> Otsailak 21</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Arama": { titulua: "Arama", province: "Gipuzkoa", edukia: "" },
       "Aretxabaleta": { 
@@ -680,7 +728,8 @@
             <li><strong>2025 (IV):</strong> Irailak 13</li>
             <li><strong>2026 (V):</strong> Irailak 12</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Asteasu": { 
         titulua: "Asteasu", province: "Gipuzkoa",
@@ -693,7 +742,8 @@
             <li><strong>2025 (III):</strong> Martxoak 16</li>
             <li><strong>2026 (IV):</strong> Otsailak 21</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Astigarraga": { 
         titulua: "Astigarraga", province: "Gipuzkoa",
@@ -704,7 +754,8 @@
           <ul>
             <li><strong>2026 (I):</strong> Irailak 26</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Ataun": { titulua: "Ataun", province: "Gipuzkoa", edukia: "" },
       "Azkoitia": { titulua: "Azkoitia", province: "Gipuzkoa", edukia: "" },
@@ -736,7 +787,8 @@
             <li><strong>2025 (XI):</strong> Urtarrilak 19</li>
             <li><strong>2026 (XII):</strong> Urtarrilak 18</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Beizama": { titulua: "Beizama", province: "Gipuzkoa", edukia: "" },
       "Belauntza": { titulua: "Belauntza", province: "Gipuzkoa", edukia: "" },
@@ -752,7 +804,8 @@
             <li><strong>2026 (VIII):</strong> Otsailak 1</li>
             <li><strong>2027 (IX):</strong> Otsailak 14</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Bergara": { titulua: "Bergara", province: "Gipuzkoa", edukia: "" },
       "Berrobi": { titulua: "Berrobi", province: "Gipuzkoa", edukia: "" },
@@ -766,7 +819,8 @@
           <ul>
             <li><strong>2026 (I):</strong> Ekainak 27</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Donostia": { 
         titulua: "Donostia", province: "Gipuzkoa",
@@ -779,7 +833,8 @@
             <li><strong>2025 (III):</strong> Ekainak 22</li>
             <li><strong>2026 (IV):</strong> Ekainak 21</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Eibar": { 
         titulua: "Eibar", province: "Gipuzkoa",
@@ -792,7 +847,8 @@
             <li><strong>2025 (XV):</strong> Ekainak 15</li>
             <li><strong>2026 (XVI):</strong> Ekainak 7</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Elduain": { titulua: "Elduain", province: "Gipuzkoa", edukia: "" },
       "Elgeta": { titulua: "Elgeta", province: "Gipuzkoa", edukia: "" },
@@ -808,7 +864,8 @@
             <li><strong>2025 (V):</strong> Maiatzak 4</li>
             <li><strong>2026 (VI):</strong> Maiatzak 3</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Errezil": { titulua: "Errezil", province: "Gipuzkoa", edukia: "" },
       "Eskoriatza": { titulua: "Eskoriatza", province: "Gipuzkoa", edukia: "" },
@@ -832,7 +889,8 @@
             <li><strong>2025 (VIII):</strong> Ekainak 7</li>
             <li><strong>2026 (IX):</strong> Ekainak 13</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Gaintza": { titulua: "Gaintza", province: "Gipuzkoa", edukia: "" },
       "Gaztelu": { titulua: "Gaztelu", province: "Gipuzkoa", edukia: "" },
@@ -848,7 +906,8 @@
             <li><strong>2025 (XIII):</strong> Maiatzak 31</li>
             <li><strong>2026 (XIV):</strong> Maiatzak 30</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Hernialde": { titulua: "Hernialde", province: "Gipuzkoa", edukia: "" },
       "Hondarribia": { 
@@ -870,7 +929,8 @@
             <li><strong>2025 (X):</strong> Azaroak 1</li>
             <li><strong>2026 (XI):</strong> Azaroak 1</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Ibarra": { 
         titulua: "Ibarra", province: "Gipuzkoa",
@@ -882,7 +942,8 @@
             <li><strong>2025 (I):</strong> Maiatzak 18</li>
             <li><strong>2026 (II):</strong> Maiatzak 10</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Idiazabal": { 
         titulua: "Idiazabal", province: "Gipuzkoa",
@@ -895,7 +956,8 @@
             <li><strong>2025 (XII):</strong> Irailak 14</li>
             <li><strong>2026 (XIII):</strong> Irailak 13</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Ikaztegieta": { titulua: "Ikaztegieta", province: "Gipuzkoa", edukia: "" },
       "Irun": { titulua: "Irun", province: "Gipuzkoa", edukia: "" },
@@ -913,7 +975,8 @@
             <li><strong>2025:</strong> -</li>
             <li><strong>2026 (III):</strong> Irailak 26</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Lazkao": { 
         titulua: "Lazkao", province: "Gipuzkoa",
@@ -924,7 +987,8 @@
           <ul>
             <li><strong>2026 (I):</strong> Ekainak 27</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Leaburu": { titulua: "Leaburu", province: "Gipuzkoa", edukia: "" },
       "Legazpi": { 
@@ -938,7 +1002,8 @@
             <li><strong>2025 (II):</strong> Urriak 12</li>
             <li><strong>2026 (III):</strong> Urriak 18</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Legorreta": { titulua: "Legorreta", province: "Gipuzkoa", edukia: "" },
       "Lezo": { 
@@ -953,7 +1018,8 @@
             <li><strong>2026 (XII):</strong> Otsailak 22</li>
             <li><strong>2027 (XIII):</strong> Otsailak 21</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Mendaro": { 
         titulua: "Mendaro", province: "Gipuzkoa",
@@ -966,7 +1032,8 @@
             <li><strong>2025 (XIII):</strong> Apirilak 5</li>
             <li><strong>2026 (XIV):</strong> Apirilak 18</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Mutiloa": { titulua: "Mutiloa", province: "Gipuzkoa", edukia: "" },
       "Mutriku": { titulua: "Mutriku", province: "Gipuzkoa", edukia: "" },
@@ -981,7 +1048,8 @@
             <li><strong>2025 (X):</strong> Ekainak 8</li>
             <li><strong>2026 (XI):</strong> Ekainak 7</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Olaberria": { titulua: "Olaberria", province: "Gipuzkoa", edukia: "" },
       "Oñati": { titulua: "Oñati", province: "Gipuzkoa", edukia: "" },
@@ -996,7 +1064,8 @@
             <li><strong>2025 (III):</strong> Otsailak 16</li>
             <li><strong>2026 (IV):</strong> Otsailak 15</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Orendain": { 
         titulua: "Orendain", province: "Gipuzkoa",
@@ -1009,7 +1078,8 @@
             <li><strong>2025 (IX):</strong> Urriak 18</li>
             <li><strong>2026 (X):</strong> Urriak 17</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Orexa": { titulua: "Orexa", province: "Gipuzkoa", edukia: "" },
       "Orio": { 
@@ -1023,7 +1093,8 @@
             <li><strong>2025 (V):</strong> Maiatzak 31</li>
             <li><strong>2026 (VI):</strong> Maiatzak 23</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Ormaiztegi": { titulua: "Ormaiztegi", province: "Gipuzkoa", edukia: "" },
       "Pasaia": { 
@@ -1035,7 +1106,8 @@
           <ul>
             <li><strong>2026 (I):</strong> Maiatzak 9</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Segura": { 
         titulua: "Segura", province: "Gipuzkoa",
@@ -1048,7 +1120,8 @@
             <li><strong>2025 (VIII):</strong> Maiatzak 11</li>
             <li><strong>2026 (IX):</strong> Maiatzak 3</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Soraluze": { titulua: "Soraluze", province: "Gipuzkoa", edukia: "" },
       "Tolosa": { 
@@ -1070,7 +1143,8 @@
             <li><strong>2025 (X):</strong> Ekainak 15</li>
             <li><strong>2026 (XI):</strong> Ekainak 14</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Urnieta": {
         titulua: "Urnieta", province: "Gipuzkoa",
@@ -1081,7 +1155,8 @@
           <ul>
             <li><strong>2027 (I):</strong> Martxoak 20</li>
           </ul>
-        `
+        `,
+        trackUrl: ""
       },
       "Urretxu": { titulua: "Urretxu", province: "Gipuzkoa", edukia: "" },
       "Usurbil": { 
@@ -1095,7 +1170,8 @@
             <li><strong>2025 (V):</strong> Ekainak 15</li>
             <li><strong>2026 (VI):</strong> Ekainak 14</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Amasa-Villabona": { 
         titulua: "Amasa-Villabona", province: "Gipuzkoa",
@@ -1116,7 +1192,8 @@
             <li><strong>2025 (XXXI):</strong> Apirilak 27</li>
             <li><strong>2026 (XXXII):</strong> Apirilak 26</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Zaldibia": { 
         titulua: "Zaldibia", province: "Gipuzkoa",
@@ -1129,7 +1206,8 @@
             <li><strong>2025 (VI):</strong> Maiatzak 24</li>
             <li><strong>2026 (VII):</strong> Maiatzak 16</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Zarautz": { 
         titulua: "Zarautz", province: "Gipuzkoa",
@@ -1142,7 +1220,8 @@
             <li><strong>2025 (XX):</strong> Apirilak 27</li>
             <li><strong>2026 (XXI):</strong> Apirilak 26</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Zegama": { titulua: "Zegama", province: "Gipuzkoa", edukia: "" },
       "Zerain": { titulua: "Zerain", province: "Gipuzkoa", edukia: "" },
@@ -1158,7 +1237,8 @@
             <li><strong>2026 (X):</strong> Otsailak 8</li>
             <li><strong>2027 (XI):</strong> Otsailak 14</li>
           </ul>
-        `
+        `,
+        trackUrl: ""
       },
       "Zizurkil": { titulua: "Zizurkil", province: "Gipuzkoa", edukia: "" },
       "Zumaia": { 
@@ -1172,7 +1252,8 @@
             <li><strong>2025 (XVI):</strong> Urriak 5</li>
             <li><strong>2026 (XVII):</strong> Urriak 3</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Zumarraga": { 
         titulua: "Zumarraga", province: "Gipuzkoa",
@@ -1185,7 +1266,8 @@
             <li><strong>2025 (X):</strong> Martxoak 23</li>
             <li><strong>2026 (XI):</strong> Martxoak 1</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Arrasate": { 
         titulua: "Arrasate", province: "Gipuzkoa",
@@ -1199,7 +1281,8 @@
             <li><strong>2026 (X):</strong> Otsailak 28</li>
             <li><strong>2027 (XI):</strong> Otsailak 27</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Leintz-Gatzaga": { 
         titulua: "Leintz-Gatzaga", province: "Gipuzkoa",
@@ -1211,7 +1294,8 @@
             <li><strong>2026 (I):</strong> Martxoak 21</li>
             <li><strong>2027 (II):</strong> Martxoak 20</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
 
       // NAFARROA
@@ -1226,7 +1310,8 @@
             <li><strong>2025 (XIX):</strong> Apirilak 13</li>
             <li><strong>2026 (XX):</strong> Apirilak 19</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Lesaka": { 
         titulua: "Lesaka", province: "Nafarroa",
@@ -1239,7 +1324,8 @@
             <li><strong>2025 (VI):</strong> Martxoak 9</li>
             <li><strong>2026 (VII):</strong> Martxoak 15</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Arantza": { 
         titulua: "Arantza", province: "Nafarroa",
@@ -1252,7 +1338,8 @@
             <li><strong>2025 (V):</strong> Martxoak 30</li>
             <li><strong>2026:</strong> -</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Zubieta": { 
         titulua: "Zubieta", province: "Nafarroa",
@@ -1264,7 +1351,8 @@
             <li><strong>2025 (I):</strong> Urriak 11</li>
             <li><strong>2026 (II):</strong> Urriak 10</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       },
       "Goizueta": { 
         titulua: "Goizueta", province: "Nafarroa",
@@ -1277,14 +1365,46 @@
             <li><strong>2025 (VI):</strong> Maiatzak 17</li>
             <li><strong>2026 (VII):</strong> Maiatzak 16</li>
           </ul>
-        ` 
+        `,
+        trackUrl: ""
       }
     };
+
+    function addTrackButtons() {
+      const h3List = sidebarContent.querySelectorAll('h3');
+      h3List.forEach(h3 => {
+        if (h3.querySelector('.track-btn')) return;
+
+        const raceLink = h3.querySelector('a.race-link');
+        if (!raceLink) return;
+
+        const currentTownTitle = sidebarTitle.textContent.trim();
+        const townKey = Object.keys(udalerriDatuak).find(k => udalerriDatuak[k].titulua === currentTownTitle);
+
+        if (townKey) {
+          const trackUrl = udalerriDatuak[townKey].trackUrl;
+
+          if (trackUrl && trackUrl.trim() !== "") {
+            const trackBtn = document.createElement('a');
+            trackBtn.href = trackUrl;
+            trackBtn.target = '_blank';
+            trackBtn.rel = 'noopener noreferrer';
+            trackBtn.className = 'track-btn';
+            trackBtn.innerHTML = `
+              <img src="TrackLogo.svg" alt="Track">
+              <span>Track</span>
+            `;
+            raceLink.insertAdjacentElement('afterend', trackBtn);
+          }
+        }
+      });
+    }
 
     function selectUdalerria(rawId) {
       if (udalerriDatuak[rawId]) {
         sidebarTitle.textContent = udalerriDatuak[rawId].titulua;
         sidebarContent.innerHTML = udalerriDatuak[rawId].edukia || `<p>Ez dago informazio gehigarririk sartuta.</p>`;
+        addTrackButtons();
       } else {
         sidebarTitle.textContent = rawId;
         sidebarContent.innerHTML = `<p>Ez dago informazio gehigarririk sartuta.</p>`;
