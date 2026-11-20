@@ -1771,7 +1771,7 @@
         const card = document.createElement('div');
         card.className = 'race-card';
 
-        // Cabecera con título y botones
+        // Cabecera: título + Instagram
         const top = document.createElement('div');
         top.className = 'race-card-top';
 
@@ -1779,19 +1779,6 @@
         titleEl.className = 'race-card-title';
         titleEl.textContent = race.raceName;
         top.appendChild(titleEl);
-
-        if (race.trackUrl && race.trackUrl.trim() !== "") {
-          const trackBtn = document.createElement('a');
-          trackBtn.href = race.trackUrl;
-          trackBtn.target = '_blank';
-          trackBtn.rel = 'noopener noreferrer';
-          trackBtn.className = 'track-btn';
-          trackBtn.innerHTML = `
-            <img src="TrackLogo.svg" alt="Track">
-            <span>Track</span>
-          `;
-          top.appendChild(trackBtn);
-        }
 
         if (race.instaUrl && race.instaUrl.trim() !== "") {
           const instaBtn = document.createElement('a');
@@ -1824,6 +1811,50 @@
         }
         card.appendChild(latestEl);
 
+        // Fila con los botones Track y Datuak
+        const actionsRow = document.createElement('div');
+        actionsRow.className = 'race-card-actions';
+
+        // Botón Track (si existe)
+        if (race.trackUrl && race.trackUrl.trim() !== "") {
+          const trackBtn = document.createElement('a');
+          trackBtn.href = race.trackUrl;
+          trackBtn.target = '_blank';
+          trackBtn.rel = 'noopener noreferrer';
+          trackBtn.className = 'track-btn';
+          trackBtn.innerHTML = `
+            <img src="TrackLogo.svg" alt="Track">
+            <span>Track</span>
+          `;
+          actionsRow.appendChild(trackBtn);
+        }
+
+        // Botón desplegable "Datuak"
+        const dataToggleBtn = document.createElement('button');
+        dataToggleBtn.type = 'button';
+        dataToggleBtn.className = 'race-card-toggle';
+        dataToggleBtn.innerHTML = `<span>Datuak</span><span class="arrow">▾</span>`;
+
+        const dataDetails = document.createElement('div');
+        dataDetails.className = 'race-card-details';
+
+        const distantziaVal = race.distantzia && race.distantzia.trim() !== "" ? race.distantzia : "-";
+        const desnibelaVal = race.desnibela && race.desnibela.trim() !== "" ? race.desnibela : "-";
+
+        dataDetails.innerHTML = `
+          <div class="data-line"><strong>Distantzia:</strong> ${distantziaVal}</div>
+          <div class="data-line"><strong>Desnibela:</strong> ${desnibelaVal}</div>
+        `;
+
+        dataToggleBtn.addEventListener('click', () => {
+          const isOpen = dataDetails.classList.toggle('open');
+          dataToggleBtn.classList.toggle('open', isOpen);
+        });
+
+        actionsRow.appendChild(dataToggleBtn);
+        card.appendChild(actionsRow);
+        card.appendChild(dataDetails);
+
         // Botón desplegable "Azken urteak"
         const otherDates = sortedDates.filter(d => d.year !== "2027");
         const lastThree = otherDates.slice(0, 3);
@@ -1852,31 +1883,6 @@
           card.appendChild(toggleBtn);
           card.appendChild(details);
         }
-
-        // Botón desplegable "Datuak" (Distantzia + Desnibela)
-        const dataToggleBtn = document.createElement('button');
-        dataToggleBtn.type = 'button';
-        dataToggleBtn.className = 'race-card-toggle';
-        dataToggleBtn.innerHTML = `<span>Datuak</span><span class="arrow">▾</span>`;
-
-        const dataDetails = document.createElement('div');
-        dataDetails.className = 'race-card-details';
-
-        const distantziaVal = race.distantzia && race.distantzia.trim() !== "" ? race.distantzia : "-";
-        const desnibelaVal = race.desnibela && race.desnibela.trim() !== "" ? race.desnibela : "-";
-
-        dataDetails.innerHTML = `
-          <div class="data-line"><strong>Distantzia:</strong> ${distantziaVal}</div>
-          <div class="data-line"><strong>Desnibela:</strong> ${desnibelaVal}</div>
-        `;
-
-        dataToggleBtn.addEventListener('click', () => {
-          const isOpen = dataDetails.classList.toggle('open');
-          dataToggleBtn.classList.toggle('open', isOpen);
-        });
-
-        card.appendChild(dataToggleBtn);
-        card.appendChild(dataDetails);
 
         sidebarContent.appendChild(card);
       });
