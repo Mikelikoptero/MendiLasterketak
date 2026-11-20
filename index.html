@@ -603,6 +603,12 @@
       color: var(--accent-color);
     }
 
+    .race-card-latest-date.no-data {
+      color: #a8a29a;
+      font-style: italic;
+      font-weight: 600;
+    }
+
     /* Botón desplegable */
     .race-card-toggle {
       display: inline-flex;
@@ -1642,11 +1648,12 @@
 
       const races = parseTownRaces(townData);
 
-      races.forEach((race, idx) => {
+      races.forEach(race => {
         // Ordenar fechas de más reciente a más antigua
         const sortedDates = race.dates.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year));
-        const latest = sortedDates[0];
-        const lastThree = sortedDates.slice(0, 3);
+
+        // Buscar específicamente el año 2027
+        const date2027 = race.dates.find(d => d.year === "2027" && d.dateStr && d.dateStr !== "-");
 
         const card = document.createElement('div');
         card.className = 'race-card';
@@ -1688,18 +1695,26 @@
 
         card.appendChild(top);
 
-        // Fecha del último año
-        if (latest) {
-          const latestEl = document.createElement('div');
-          latestEl.className = 'race-card-latest';
+        // Fecha de 2027 (o "data gabe")
+        const latestEl = document.createElement('div');
+        latestEl.className = 'race-card-latest';
+        if (date2027) {
           latestEl.innerHTML = `
-            <span class="race-card-latest-label">Azken edizioa</span>
-            <span class="race-card-latest-date">${latest.dateStr}${latest.edition ? ` (${latest.edition})` : ''}</span>
+            <span class="race-card-latest-label">2027</span>
+            <span class="race-card-latest-date">${date2027.dateStr}${date2027.edition ? ` (${date2027.edition})` : ''}</span>
           `;
-          card.appendChild(latestEl);
+        } else {
+          latestEl.innerHTML = `
+            <span class="race-card-latest-label">2027</span>
+            <span class="race-card-latest-date no-data">data gabe</span>
+          `;
         }
+        card.appendChild(latestEl);
 
-        // Botón desplegable
+        // Botón desplegable (últimos 3 años registrados, sin 2027)
+        const otherDates = sortedDates.filter(d => d.year !== "2027");
+        const lastThree = otherDates.slice(0, 3);
+
         if (lastThree.length > 0) {
           const toggleBtn = document.createElement('button');
           toggleBtn.type = 'button';
