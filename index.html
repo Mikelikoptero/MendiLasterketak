@@ -451,9 +451,29 @@
       text-decoration: underline;
     }
 
+    /* 📋 Lista de años/ediciones con sangría y flecha */
     .sidebar-content ul {
-      margin-left: 1.25rem;
+      list-style: none;
+      margin-left: 0;
       margin-bottom: 1rem;
+      padding-left: 1.6rem;
+    }
+
+    .sidebar-content ul li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .sidebar-content ul li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent-color);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      font-weight: 700;
     }
 
     /* 🥾 Botón Track (mantiene estética web, tamaño reducido) */
