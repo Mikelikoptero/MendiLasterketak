@@ -556,6 +556,127 @@
       filter: brightness(0) invert(1);
     }
 
+    /* 🗂️ Nueva tarjeta de carrera en el panel lateral */
+    .race-card {
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: var(--card-bg);
+    }
+
+    .race-card-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.6rem;
+    }
+
+    .race-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-right: auto;
+      word-break: break-word;
+    }
+
+    .race-card-latest {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: #4a453f;
+      margin-bottom: 0.75rem;
+    }
+
+    .race-card-latest-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #8c7f73;
+      letter-spacing: 0.3px;
+    }
+
+    .race-card-latest-date {
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    /* Botón desplegable */
+    .race-card-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .race-card-toggle:hover {
+      background: var(--bg-color);
+      color: var(--primary-color);
+      border-color: var(--accent-color);
+    }
+
+    .race-card-toggle .arrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+      transform-origin: center;
+    }
+
+    .race-card-toggle.open .arrow {
+      transform: rotate(180deg);
+    }
+
+    .race-card-details {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border-color);
+      display: none;
+    }
+
+    .race-card-details.open {
+      display: block;
+    }
+
+    .race-card-details ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+    }
+
+    .race-card-details ul li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    .race-card-details ul li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent-color);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    .race-card-details ul li strong {
+      color: var(--primary-color);
+    }
+
     /* Tooltip */
     .map-tooltip {
       position: fixed;
@@ -1474,17 +1595,74 @@
       return races;
     }
 
-    function addRaceButtons() {
-      const h3List = sidebarContent.querySelectorAll('h3');
+    /* 📊 Extrae las carreras con sus fechas de un municipio */
+    function parseTownRaces(townData) {
+      const result = [];
+      if (!townData.edukia) return result;
+
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = townData.edukia;
+
+      const h3List = tempDiv.querySelectorAll('h3');
       h3List.forEach(h3 => {
-        if (h3.querySelector('.track-btn') || h3.querySelector('.instagram-btn')) return;
+        const raceName = h3.textContent.trim();
+        const trackUrl = h3.getAttribute('data-track') || '';
+        const instaUrl = h3.getAttribute('data-instagram') || '';
+        const ul = h3.nextElementSibling;
+        const dates = [];
 
-        const trackUrl = h3.getAttribute('data-track');
-        const instaUrl = h3.getAttribute('data-instagram');
+        if (ul && ul.tagName.toLowerCase() === 'ul') {
+          ul.querySelectorAll('li').forEach(li => {
+            const text = li.innerText || li.textContent;
+            const match = text.match(/(\d{4})(?:\s*\(([^)]+)\))?:\s*(.+)/);
+            if (match) {
+              const year = match[1];
+              const edition = match[2] || '';
+              const dateStr = match[3].trim();
+              dates.push({ year, edition, dateStr });
+            }
+          });
+        }
 
-        if (trackUrl && trackUrl.trim() !== "") {
+        result.push({ raceName, trackUrl, instaUrl, dates });
+      });
+
+      return result;
+    }
+
+    /* 🗂️ Renderiza una tarjeta por carrera en el panel lateral */
+    function renderSidebarRaces(rawId) {
+      const townData = udalerriDatuak[rawId];
+      sidebarContent.innerHTML = "";
+
+      if (!townData || !townData.edukia) {
+        sidebarContent.innerHTML = `<p>Ez dago informazio gehigarririk sartuta.</p>`;
+        return;
+      }
+
+      const races = parseTownRaces(townData);
+
+      races.forEach((race, idx) => {
+        // Ordenar fechas de más reciente a más antigua
+        const sortedDates = race.dates.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year));
+        const latest = sortedDates[0];
+        const lastThree = sortedDates.slice(0, 3);
+
+        const card = document.createElement('div');
+        card.className = 'race-card';
+
+        // Cabecera con título y botones
+        const top = document.createElement('div');
+        top.className = 'race-card-top';
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'race-card-title';
+        titleEl.textContent = race.raceName;
+        top.appendChild(titleEl);
+
+        if (race.trackUrl && race.trackUrl.trim() !== "") {
           const trackBtn = document.createElement('a');
-          trackBtn.href = trackUrl;
+          trackBtn.href = race.trackUrl;
           trackBtn.target = '_blank';
           trackBtn.rel = 'noopener noreferrer';
           trackBtn.className = 'track-btn';
@@ -1492,12 +1670,12 @@
             <img src="TrackLogo.svg" alt="Track">
             <span>Track</span>
           `;
-          h3.appendChild(trackBtn);
+          top.appendChild(trackBtn);
         }
 
-        if (instaUrl && instaUrl.trim() !== "") {
+        if (race.instaUrl && race.instaUrl.trim() !== "") {
           const instaBtn = document.createElement('a');
-          instaBtn.href = instaUrl;
+          instaBtn.href = race.instaUrl;
           instaBtn.target = '_blank';
           instaBtn.rel = 'noopener noreferrer';
           instaBtn.className = 'instagram-btn';
@@ -1505,16 +1683,56 @@
             <img src="InstagramLogo.png" alt="Instagram">
             <span>Instagram</span>
           `;
-          h3.appendChild(instaBtn);
+          top.appendChild(instaBtn);
         }
+
+        card.appendChild(top);
+
+        // Fecha del último año
+        if (latest) {
+          const latestEl = document.createElement('div');
+          latestEl.className = 'race-card-latest';
+          latestEl.innerHTML = `
+            <span class="race-card-latest-label">Azken edizioa</span>
+            <span class="race-card-latest-date">${latest.dateStr}${latest.edition ? ` (${latest.edition})` : ''}</span>
+          `;
+          card.appendChild(latestEl);
+        }
+
+        // Botón desplegable
+        if (lastThree.length > 0) {
+          const toggleBtn = document.createElement('button');
+          toggleBtn.type = 'button';
+          toggleBtn.className = 'race-card-toggle';
+          toggleBtn.innerHTML = `<span>Azken urteak</span><span class="arrow">▾</span>`;
+
+          const details = document.createElement('div');
+          details.className = 'race-card-details';
+
+          let detailsHtml = '<ul>';
+          lastThree.forEach(d => {
+            detailsHtml += `<li><strong>${d.year}${d.edition ? ` (${d.edition})` : ''}:</strong> ${d.dateStr}</li>`;
+          });
+          detailsHtml += '</ul>';
+          details.innerHTML = detailsHtml;
+
+          toggleBtn.addEventListener('click', () => {
+            const isOpen = details.classList.toggle('open');
+            toggleBtn.classList.toggle('open', isOpen);
+          });
+
+          card.appendChild(toggleBtn);
+          card.appendChild(details);
+        }
+
+        sidebarContent.appendChild(card);
       });
     }
 
     function selectUdalerria(rawId) {
       if (udalerriDatuak[rawId]) {
         sidebarTitle.textContent = udalerriDatuak[rawId].titulua;
-        sidebarContent.innerHTML = udalerriDatuak[rawId].edukia || `<p>Ez dago informazio gehigarririk sartuta.</p>`;
-        addRaceButtons();
+        renderSidebarRaces(rawId);
       } else {
         sidebarTitle.textContent = rawId;
         sidebarContent.innerHTML = `<p>Ez dago informazio gehigarririk sartuta.</p>`;
