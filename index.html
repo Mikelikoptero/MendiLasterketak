@@ -556,6 +556,17 @@
       filter: brightness(0) invert(1);
     }
 
+    /* Instagram solo logo: botón cuadrado compacto */
+    .instagram-btn {
+      padding: 4px;
+      gap: 0;
+    }
+
+    .instagram-btn img {
+      width: 16px;
+      height: 16px;
+    }
+
     /* 🗂️ Nueva tarjeta de carrera en el panel lateral */
     .race-card {
       border: 1px solid var(--border-color);
@@ -609,6 +620,15 @@
       font-weight: 600;
     }
 
+    /* Fila de acciones: Track, Datuak y Azken urteak en una línea */
+    .race-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 0.25rem;
+    }
+
     /* Botón desplegable (compartido por ambos menús) */
     .race-card-toggle {
       display: inline-flex;
@@ -625,8 +645,7 @@
       transition: all 0.15s ease;
       line-height: 1;
       user-select: none;
-      margin-right: 6px;
-      margin-bottom: 4px;
+      flex-shrink: 0;
     }
 
     .race-card-toggle:hover {
@@ -1788,7 +1807,6 @@
           instaBtn.className = 'instagram-btn';
           instaBtn.innerHTML = `
             <img src="InstagramLogo.png" alt="Instagram">
-            <span>Instagram</span>
           `;
           top.appendChild(instaBtn);
         }
@@ -1811,11 +1829,11 @@
         }
         card.appendChild(latestEl);
 
-        // Fila con los botones Track y Datuak
+        // Fila única: Track + Datuak + Azken urteak
         const actionsRow = document.createElement('div');
         actionsRow.className = 'race-card-actions';
 
-        // Botón Track (si existe)
+        // 1. Botón Track (si existe)
         if (race.trackUrl && race.trackUrl.trim() !== "") {
           const trackBtn = document.createElement('a');
           trackBtn.href = race.trackUrl;
@@ -1829,7 +1847,7 @@
           actionsRow.appendChild(trackBtn);
         }
 
-        // Botón desplegable "Datuak"
+        // 2. Botón Datuak
         const dataToggleBtn = document.createElement('button');
         dataToggleBtn.type = 'button';
         dataToggleBtn.className = 'race-card-toggle';
@@ -1852,37 +1870,41 @@
         });
 
         actionsRow.appendChild(dataToggleBtn);
-        card.appendChild(actionsRow);
-        card.appendChild(dataDetails);
 
-        // Botón desplegable "Azken urteak"
+        // 3. Botón Azken urteak (si hay años anteriores)
         const otherDates = sortedDates.filter(d => d.year !== "2027");
         const lastThree = otherDates.slice(0, 3);
 
-        if (lastThree.length > 0) {
-          const toggleBtn = document.createElement('button');
-          toggleBtn.type = 'button';
-          toggleBtn.className = 'race-card-toggle';
-          toggleBtn.innerHTML = `<span>Azken urteak</span><span class="arrow">▾</span>`;
+        let yearsToggleBtn = null;
+        let yearsDetails = null;
 
-          const details = document.createElement('div');
-          details.className = 'race-card-details';
+        if (lastThree.length > 0) {
+          yearsToggleBtn = document.createElement('button');
+          yearsToggleBtn.type = 'button';
+          yearsToggleBtn.className = 'race-card-toggle';
+          yearsToggleBtn.innerHTML = `<span>Azken urteak</span><span class="arrow">▾</span>`;
+
+          yearsDetails = document.createElement('div');
+          yearsDetails.className = 'race-card-details';
 
           let detailsHtml = '<ul>';
           lastThree.forEach(d => {
             detailsHtml += `<li><strong>${d.year}${d.edition ? ` (${d.edition})` : ''}:</strong> ${d.dateStr}</li>`;
           });
           detailsHtml += '</ul>';
-          details.innerHTML = detailsHtml;
+          yearsDetails.innerHTML = detailsHtml;
 
-          toggleBtn.addEventListener('click', () => {
-            const isOpen = details.classList.toggle('open');
-            toggleBtn.classList.toggle('open', isOpen);
+          yearsToggleBtn.addEventListener('click', () => {
+            const isOpen = yearsDetails.classList.toggle('open');
+            yearsToggleBtn.classList.toggle('open', isOpen);
           });
 
-          card.appendChild(toggleBtn);
-          card.appendChild(details);
+          actionsRow.appendChild(yearsToggleBtn);
         }
+
+        card.appendChild(actionsRow);
+        card.appendChild(dataDetails);
+        if (yearsDetails) card.appendChild(yearsDetails);
 
         sidebarContent.appendChild(card);
       });
