@@ -257,6 +257,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
       margin-bottom: 1rem;
       padding-bottom: 0.75rem;
       border-bottom: 2px solid var(--bg-color);
@@ -268,7 +270,15 @@
       font-weight: 700;
     }
 
-    .year-select {
+    .calendar-toolbar-filters {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .year-select,
+    .calendar-province-select {
       padding: 6px 12px;
       font-size: 0.9rem;
       font-weight: 600;
@@ -683,10 +693,17 @@
       <div class="calendar-container" id="calendarContainer">
         <div class="calendar-toolbar">
           <h3>Mendi Lasterketen Egutegia</h3>
-          <select id="yearSelect" class="year-select">
-            <option value="2026">2026</option>
-            <option value="2027" selected>2027</option>
-          </select>
+          <div class="calendar-toolbar-filters">
+            <select id="calendarProvinceSelect" class="calendar-province-select">
+              <option value="all" selected>Guztiak</option>
+              <option value="Gipuzkoa">Gipuzkoa</option>
+              <option value="Nafarroa">Nafarroa</option>
+            </select>
+            <select id="yearSelect" class="year-select">
+              <option value="2026">2026</option>
+              <option value="2027" selected>2027</option>
+            </select>
+          </div>
         </div>
         <div class="months-grid" id="calendarGrid"></div>
       </div>
@@ -706,6 +723,7 @@
     const searchInput = document.getElementById('searchInput');
     const yearSelect = document.getElementById('yearSelect');
     const provinceSelect = document.getElementById('provinceSelect');
+    const calendarProvinceSelect = document.getElementById('calendarProvinceSelect');
     const tooltip = document.getElementById('mapTooltip');
 
     const btnMap = document.getElementById('btnMap');
@@ -1655,6 +1673,7 @@
                   races.push({
                     townKey: key,
                     townTitle: townData.titulua,
+                    townProvince: townData.province,
                     raceName: raceName,
                     year: year,
                     edition: edition,
@@ -1672,16 +1691,17 @@
       return races;
     }
 
-    function renderCalendarGrid(filter = "", selectedYear = "2027") {
+    function renderCalendarGrid(filter = "", selectedYear = "2027", selectedProvince = "all") {
       calendarGrid.innerHTML = "";
       const allRaces = parseRacesFromData();
 
       const filteredRaces = allRaces.filter(r => {
         const matchesYear = r.year === selectedYear;
+        const matchesProvince = selectedProvince === "all" || r.townProvince === selectedProvince;
         const matchesSearch = filter === "" || 
                               r.raceName.toLowerCase().includes(filter.toLowerCase()) || 
                               r.townTitle.toLowerCase().includes(filter.toLowerCase());
-        return matchesYear && matchesSearch;
+        return matchesYear && matchesProvince && matchesSearch;
       });
 
       if (filteredRaces.length === 0) {
@@ -1737,7 +1757,7 @@
     searchInput.addEventListener('input', (e) => {
       const term = e.target.value;
       renderList(term, provinceSelect.value);
-      renderCalendarGrid(term, yearSelect.value);
+      renderCalendarGrid(term, yearSelect.value, calendarProvinceSelect.value);
 
       if (term.trim() !== "") {
         const matchKey = Object.keys(udalerriDatuak).find(k => 
@@ -1750,7 +1770,11 @@
     });
 
     yearSelect.addEventListener('change', (e) => {
-      renderCalendarGrid(searchInput.value, e.target.value);
+      renderCalendarGrid(searchInput.value, e.target.value, calendarProvinceSelect.value);
+    });
+
+    calendarProvinceSelect.addEventListener('change', (e) => {
+      renderCalendarGrid(searchInput.value, yearSelect.value, e.target.value);
     });
 
     provinceSelect.addEventListener('change', (e) => {
@@ -1758,7 +1782,7 @@
     });
 
     renderList(searchInput.value, provinceSelect.value);
-    renderCalendarGrid(searchInput.value, yearSelect.value);
+    renderCalendarGrid(searchInput.value, yearSelect.value, calendarProvinceSelect.value);
 
     // Toggle entre Vistas
     btnMap.addEventListener('click', () => {
@@ -1792,7 +1816,7 @@
       listContainer.style.display = 'none';
       calendarContainer.style.display = 'flex';
 
-      renderCalendarGrid(searchInput.value, yearSelect.value);
+      renderCalendarGrid(searchInput.value, yearSelect.value, calendarProvinceSelect.value);
     });
   </script>
 </body>
