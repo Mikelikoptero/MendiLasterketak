@@ -714,6 +714,56 @@
       color: var(--primary-color);
     }
 
+    /* 🟩 Botones de marcaje M / L */
+    .marcaje-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .marcaje-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #8c7f73;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .marcaje-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .marcaje-btn.marcada[data-usuario="mikel"] {
+      background: var(--accent-color);
+      color: #faf7f2;
+      border-color: var(--accent-color);
+    }
+
+    .marcaje-btn.marcada[data-usuario="luken"] {
+      background: var(--map-hover-color);
+      color: #faf7f2;
+      border-color: var(--map-hover-color);
+    }
+
+    /* En la lista del egutegio, alinear a la derecha */
+    .calendar-item .marcaje-box {
+      margin-left: auto;
+    }
+
     /* Tooltip */
     .map-tooltip {
       position: fixed;
@@ -887,6 +937,130 @@
     const btnMap = document.getElementById('btnMap');
     const btnList = document.getElementById('btnList');
     const btnCalendar = document.getElementById('btnCalendar');
+
+    /* ============================================ */
+    /* CONFIGURACIÓN JSONBIN                        */
+    /* ============================================ */
+    const JSONBIN_CONFIG = {
+      binId: "6b01c208ffd5d16053d3cac5",
+      accessKey: "$2a$10$uWDkdOUt.u6vrEBPKIl5ge7JbML4AxC9CXR0XFd20mqtXCSI2QFg2",
+      baseUrl: "https://api.jsonbin.io/v3/b"
+    };
+
+    let marcajes = { mikel: [], luken: [] };
+    let marcajesCargados = false;
+
+    function generarRaceId(raceName) {
+      return raceName
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+    }
+
+    async function cargarMarcajes() {
+      try {
+        const response = await fetch(`${JSONBIN_CONFIG.baseUrl}/${JSONBIN_CONFIG.binId}/latest`, {
+          headers: { "X-Access-Key": JSONBIN_CONFIG.accessKey }
+        });
+        if (!response.ok) throw new Error("Error al leer");
+        const data = await response.json();
+        marcajes = data.record || {};
+        if (!marcajes.mikel) marcajes.mikel = [];
+        if (!marcajes.luken) marcajes.luken = [];
+        marcajesCargados = true;
+        return marcajes;
+      } catch (error) {
+        console.error("Error cargando marcajes:", error);
+        marcajes = { mikel: [], luken: [] };
+        marcajesCargados = false;
+        return marcajes;
+      }
+    }
+
+    async function guardarMarcajes() {
+      try {
+        const response = await fetch(`${JSONBIN_CONFIG.baseUrl}/${JSONBIN_CONFIG.binId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Access-Key": JSONBIN_CONFIG.accessKey
+          },
+          body: JSON.stringify(marcajes)
+        });
+        if (!response.ok) throw new Error("Error al guardar");
+        return true;
+      } catch (error) {
+        console.error("Error guardando marcajes:", error);
+        return false;
+      }
+    }
+
+    function estaMarcada(raceId, usuario) {
+      return marcajes[usuario] && marcajes[usuario].includes(raceId);
+    }
+
+    async function toggleMarcaje(raceId, usuario) {
+      if (!marcajes[usuario]) marcajes[usuario] = [];
+      const index = marcajes[usuario].indexOf(raceId);
+      if (index === -1) {
+        marcajes[usuario].push(raceId);
+      } else {
+        marcajes[usuario].splice(index, 1);
+      }
+      actualizarBotonesMarcaje();
+      await guardarMarcajes();
+    }
+
+    function actualizarBotonesMarcaje() {
+      document.querySelectorAll(".marcaje-btn").forEach(btn => {
+        const raceId = btn.dataset.raceId;
+        const usuario = btn.dataset.usuario;
+        if (estaMarcada(raceId, usuario)) {
+          btn.classList.add("marcada");
+        } else {
+          btn.classList.remove("marcada");
+        }
+      });
+    }
+
+    function crearBotonesMarcaje(raceId) {
+      const box = document.createElement("div");
+      box.className = "marcaje-box";
+
+      // Botón Mikel
+      const btnMikel = document.createElement("button");
+      btnMikel.type = "button";
+      btnMikel.className = "marcaje-btn";
+      btnMikel.dataset.raceId = raceId;
+      btnMikel.dataset.usuario = "mikel";
+      btnMikel.textContent = "M";
+      btnMikel.title = "Mikel";
+      if (estaMarcada(raceId, "mikel")) btnMikel.classList.add("marcada");
+      btnMikel.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMarcaje(raceId, "mikel");
+      });
+      box.appendChild(btnMikel);
+
+      // Botón Luken
+      const btnLuken = document.createElement("button");
+      btnLuken.type = "button";
+      btnLuken.className = "marcaje-btn";
+      btnLuken.dataset.raceId = raceId;
+      btnLuken.dataset.usuario = "luken";
+      btnLuken.textContent = "L";
+      btnLuken.title = "Luken";
+      if (estaMarcada(raceId, "luken")) btnLuken.classList.add("marcada");
+      btnLuken.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMarcaje(raceId, "luken");
+      });
+      box.appendChild(btnLuken);
+
+      return box;
+    }
 
     /* 📌 UDALERRIEN DATU-BASEA (Gipuzkoa + Nafarroa) */
     const udalerriDatuak = {
@@ -1791,11 +1965,12 @@
       races.forEach(race => {
         const sortedDates = race.dates.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year));
         const date2027 = race.dates.find(d => d.year === "2027" && d.dateStr && d.dateStr !== "-");
+        const raceId = generarRaceId(race.raceName);
 
         const card = document.createElement('div');
         card.className = 'race-card';
 
-        // Cabecera: título + Instagram
+        // Cabecera: título + Instagram + marcajes
         const top = document.createElement('div');
         top.className = 'race-card-top';
 
@@ -1810,11 +1985,12 @@
           instaBtn.target = '_blank';
           instaBtn.rel = 'noopener noreferrer';
           instaBtn.className = 'instagram-btn';
-          instaBtn.innerHTML = `
-            <img src="InstagramLogo.png" alt="Instagram">
-          `;
+          instaBtn.innerHTML = `<img src="InstagramLogo.png" alt="Instagram">`;
           top.appendChild(instaBtn);
         }
+
+        // Marcajes M / L
+        top.appendChild(crearBotonesMarcaje(raceId));
 
         card.appendChild(top);
 
@@ -1838,7 +2014,7 @@
         const actionsRow = document.createElement('div');
         actionsRow.className = 'race-card-actions';
 
-        // 1. Botón Track (si existe)
+        // 1. Botón Track
         if (race.trackUrl && race.trackUrl.trim() !== "") {
           const trackBtn = document.createElement('a');
           trackBtn.href = race.trackUrl;
@@ -1876,7 +2052,7 @@
 
         actionsRow.appendChild(dataToggleBtn);
 
-        // 3. Botón Azken urteak (si hay años anteriores)
+        // 3. Botón Azken urteak
         const otherDates = sortedDates.filter(d => d.year !== "2027");
         const lastThree = otherDates.slice(0, 3);
 
@@ -1995,6 +2171,7 @@
       filtered.forEach(r => {
         const li = document.createElement('li');
         li.className = 'udalerri-li';
+        const raceId = generarRaceId(r.raceName);
         li.innerHTML = `
           <span class="race-item-name">${r.raceName}</span>
           <span class="race-item-town">${r.townTitle}</span>
@@ -2132,6 +2309,7 @@
         const mRaces = racesByMonth[mNum].sort((a,b) => a.day - b.day);
 
         mRaces.forEach(r => {
+          const raceId = generarRaceId(r.raceName);
           racesHtml += `
             <div class="calendar-item" onclick="selectUdalerria('${r.townKey}')">
               <div class="date-badge">
@@ -2144,6 +2322,7 @@
                   <span class="race-town-tag">${r.townTitle}</span>
                 </div>
               </div>
+              <div class="marcaje-box" data-race-id="${raceId}"></div>
             </div>
           `;
         });
@@ -2154,6 +2333,16 @@
         `;
 
         calendarGrid.appendChild(monthBlock);
+      });
+
+      // Insertar botones de marcaje en cada item del calendario
+      document.querySelectorAll('.calendar-item').forEach(item => {
+        const box = item.querySelector('.marcaje-box');
+        if (!box) return;
+        const raceId = box.dataset.raceId;
+        // Vaciar y añadir los botones
+        box.innerHTML = '';
+        box.appendChild(crearBotonesMarcaje(raceId));
       });
     }
 
@@ -2185,8 +2374,18 @@
       renderList(searchInput.value, e.target.value);
     });
 
-    renderList(searchInput.value, provinceSelect.value);
-    renderCalendarGrid(searchInput.value, yearSelect.value, calendarProvinceSelect.value);
+    /* ============================================ */
+    /* INICIALIZACIÓN                               */
+    /* ============================================ */
+    async function init() {
+      // Cargar marcajes primero
+      await cargarMarcajes();
+      // Renderizar todo
+      renderList(searchInput.value, provinceSelect.value);
+      renderCalendarGrid(searchInput.value, yearSelect.value, calendarProvinceSelect.value);
+    }
+
+    init();
 
     // Toggle entre Vistas
     btnMap.addEventListener('click', () => {
