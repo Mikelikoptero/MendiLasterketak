@@ -238,9 +238,9 @@
       align-self: flex-start;
     }
 
-    /* 🗓️ Vista Egutegia Matriz Visual (Inicia activa) */
+    /* 🗓️ Vista Datak (lista por meses) */
     .calendar-container {
-      display: flex;
+      display: none;
       width: 100%;
       max-width: 650px;
       height: 100%;
@@ -398,6 +398,177 @@
       color: #8c7f73;
       padding: 3rem 1rem;
       font-style: italic;
+    }
+
+    /* 🗓️ Calendario de pared */
+    .wall-calendar-container {
+      display: none;
+      width: 100%;
+      max-width: 900px;
+      height: 100%;
+      max-height: calc(100vh - 180px);
+      background: var(--card-bg);
+      padding: 1.25rem;
+      border-radius: 3px;
+      border: 1px solid var(--border-color);
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .wall-calendar-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--bg-color);
+    }
+
+    .wall-calendar-toolbar h3 {
+      font-size: 1.05rem;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    .wall-months-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .wall-months-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .wall-months-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .wall-month {
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+
+    .wall-month-header {
+      background: var(--primary-color);
+      color: #f5f2eb;
+      padding: 7px 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .wall-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .wall-weekdays span {
+      padding: 5px 0;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #8c7f73;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .wall-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .wall-day {
+      min-height: 60px;
+      padding: 3px;
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.7rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wall-day:nth-child(7n) {
+      border-right: none;
+    }
+
+    .wall-day.empty {
+      background: var(--bg-color);
+      opacity: 0.4;
+    }
+
+    .wall-day-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #8c7f73;
+      align-self: flex-start;
+      line-height: 1;
+    }
+
+    .wall-day.today .wall-day-num {
+      background: var(--accent-color);
+      color: #faf7f2;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+    }
+
+    .wall-race {
+      display: block;
+      padding: 2px 4px;
+      border-radius: 2px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      line-height: 1.15;
+      text-decoration: none;
+      color: var(--primary-color);
+      background: var(--bg-color);
+      border-left: 2px solid var(--accent-color);
+      cursor: pointer;
+      transition: background 0.15s ease;
+      word-break: break-word;
+    }
+
+    .wall-race:hover {
+      background: var(--border-color);
+    }
+
+    .wall-race.only-mikel {
+      border-left-color: var(--accent-color);
+    }
+
+    .wall-race.only-luken {
+      border-left-color: var(--map-hover-color);
+    }
+
+    .wall-race.both {
+      border-left-color: var(--primary-color);
+    }
+
+    .wall-race-who {
+      display: inline-flex;
+      gap: 2px;
+      margin-left: 2px;
+      font-size: 0.55rem;
+      opacity: 0.75;
     }
 
     /* Estilos SVG */
@@ -795,6 +966,7 @@
         padding: 0.75rem;
         flex-direction: row;
         justify-content: space-between;
+        flex-wrap: wrap;
       }
 
       .app-layout {
@@ -839,10 +1011,11 @@
       }
 
       .list-container,
-      .calendar-container {
+      .calendar-container,
+      .wall-calendar-container {
         order: 2;
         width: 100%;
-        max-height: 50vh;
+        max-height: 70vh;
         border: 1px solid var(--border-color);
       }
     }
@@ -857,7 +1030,8 @@
       <div class="view-toggle">
         <button class="toggle-btn" id="btnMap">Mapa</button>
         <button class="toggle-btn" id="btnList">Zerrenda</button>
-        <button class="toggle-btn active" id="btnCalendar">Egutegia</button>
+        <button class="toggle-btn" id="btnData">Datak</button>
+        <button class="toggle-btn active" id="btnWallCalendar">Egutegia</button>
       </div>
     </div>
   </header>
@@ -897,10 +1071,10 @@
         <ul class="udalerri-ul" id="udalerriUl"></ul>
       </div>
 
-      <!-- 3º EN MÓVIL: Egutegia (visible por defecto) -->
+      <!-- Datak (lista por meses) -->
       <div class="calendar-container" id="calendarContainer">
         <div class="calendar-toolbar">
-          <h3>Mendi Lasterketen Egutegia</h3>
+          <h3>Datak</h3>
           <div class="calendar-toolbar-filters">
             <select id="calendarProvinceSelect" class="calendar-province-select">
               <option value="all" selected>Guztiak</option>
@@ -915,6 +1089,25 @@
         </div>
         <div class="months-grid" id="calendarGrid"></div>
       </div>
+
+      <!-- Egutegia (calendario de pared) -->
+      <div class="wall-calendar-container" id="wallCalendarContainer">
+        <div class="wall-calendar-toolbar">
+          <h3>Egutegia</h3>
+          <div class="calendar-toolbar-filters">
+            <select id="wallProvinceSelect" class="calendar-province-select">
+              <option value="all" selected>Guztiak</option>
+              <option value="Gipuzkoa">Gipuzkoa</option>
+              <option value="Nafarroa">Nafarroa</option>
+            </select>
+            <select id="wallYearSelect" class="year-select">
+              <option value="2026">2026</option>
+              <option value="2027" selected>2027</option>
+            </select>
+          </div>
+        </div>
+        <div class="wall-months-grid" id="wallMonthsGrid"></div>
+      </div>
     </div>
   </div>
 
@@ -926,17 +1119,22 @@
     const mapContainer = document.getElementById('mapContainer');
     const listContainer = document.getElementById('listContainer');
     const calendarContainer = document.getElementById('calendarContainer');
+    const wallCalendarContainer = document.getElementById('wallCalendarContainer');
     const udalerriUl = document.getElementById('udalerriUl');
     const calendarGrid = document.getElementById('calendarGrid');
+    const wallMonthsGrid = document.getElementById('wallMonthsGrid');
     const searchInput = document.getElementById('searchInput');
     const yearSelect = document.getElementById('yearSelect');
     const provinceSelect = document.getElementById('provinceSelect');
     const calendarProvinceSelect = document.getElementById('calendarProvinceSelect');
+    const wallYearSelect = document.getElementById('wallYearSelect');
+    const wallProvinceSelect = document.getElementById('wallProvinceSelect');
     const tooltip = document.getElementById('mapTooltip');
 
     const btnMap = document.getElementById('btnMap');
     const btnList = document.getElementById('btnList');
-    const btnCalendar = document.getElementById('btnCalendar');
+    const btnData = document.getElementById('btnData');
+    const btnWallCalendar = document.getElementById('btnWallCalendar');
 
     /* ============================================ */
     /* CONFIGURACIÓN JSONBIN                        */
@@ -1010,6 +1208,10 @@
         marcajes[usuario].splice(index, 1);
       }
       actualizarBotonesMarcaje();
+      // Refrescar calendario de pared si está visible
+      if (wallCalendarContainer.style.display === 'flex') {
+        renderWallCalendar(wallProvinceSelect.value, wallYearSelect.value);
+      }
       await guardarMarcajes();
     }
 
@@ -1029,7 +1231,6 @@
       const box = document.createElement("div");
       box.className = "marcaje-box";
 
-      // Botón Mikel
       const btnMikel = document.createElement("button");
       btnMikel.type = "button";
       btnMikel.className = "marcaje-btn";
@@ -1044,7 +1245,6 @@
       });
       box.appendChild(btnMikel);
 
-      // Botón Luken
       const btnLuken = document.createElement("button");
       btnLuken.type = "button";
       btnLuken.className = "marcaje-btn";
@@ -1970,7 +2170,6 @@
         const card = document.createElement('div');
         card.className = 'race-card';
 
-        // Cabecera: título + Instagram + marcajes
         const top = document.createElement('div');
         top.className = 'race-card-top';
 
@@ -1989,12 +2188,10 @@
           top.appendChild(instaBtn);
         }
 
-        // Marcajes M / L
         top.appendChild(crearBotonesMarcaje(raceId));
 
         card.appendChild(top);
 
-        // Fecha de 2027 (o "data gabe")
         const latestEl = document.createElement('div');
         latestEl.className = 'race-card-latest';
         if (date2027) {
@@ -2010,11 +2207,9 @@
         }
         card.appendChild(latestEl);
 
-        // Fila única: Track + Datuak + Azken urteak
         const actionsRow = document.createElement('div');
         actionsRow.className = 'race-card-actions';
 
-        // 1. Botón Track
         if (race.trackUrl && race.trackUrl.trim() !== "") {
           const trackBtn = document.createElement('a');
           trackBtn.href = race.trackUrl;
@@ -2028,7 +2223,6 @@
           actionsRow.appendChild(trackBtn);
         }
 
-        // 2. Botón Datuak
         const dataToggleBtn = document.createElement('button');
         dataToggleBtn.type = 'button';
         dataToggleBtn.className = 'race-card-toggle';
@@ -2052,7 +2246,6 @@
 
         actionsRow.appendChild(dataToggleBtn);
 
-        // 3. Botón Azken urteak
         const otherDates = sortedDates.filter(d => d.year !== "2027");
         const lastThree = otherDates.slice(0, 3);
 
@@ -2171,7 +2364,6 @@
       filtered.forEach(r => {
         const li = document.createElement('li');
         li.className = 'udalerri-li';
-        const raceId = generarRaceId(r.raceName);
         li.innerHTML = `
           <span class="race-item-name">${r.raceName}</span>
           <span class="race-item-town">${r.townTitle}</span>
@@ -2184,7 +2376,7 @@
       });
     }
 
-    /* 🗓️ EGUTEGIA MATRIZ / MESES PARSER */
+    /* 🗓️ DATAK MATRIZ / MESES PARSER */
     const monthNames = {
       1: "Urtarrila", 2: "Otsaila", 3: "Martxoa", 4: "Apirila",
       5: "Maiatza", 6: "Ekaina", 7: "Uztaila", 8: "Abuztua",
@@ -2335,15 +2527,132 @@
         calendarGrid.appendChild(monthBlock);
       });
 
-      // Insertar botones de marcaje en cada item del calendario
       document.querySelectorAll('.calendar-item').forEach(item => {
         const box = item.querySelector('.marcaje-box');
         if (!box) return;
         const raceId = box.dataset.raceId;
-        // Vaciar y añadir los botones
         box.innerHTML = '';
         box.appendChild(crearBotonesMarcaje(raceId));
       });
+    }
+
+    /* ============================================ */
+    /* CALENDARIO DE PARED (Egutegia)               */
+    /* ============================================ */
+    const wallWeekDays = ["AL", "AR", "AZ", "OG", "OL", "LA", "IG"];
+
+    function renderWallCalendar(province = "all", year = "2027") {
+      wallMonthsGrid.innerHTML = "";
+      const allRaces = parseRacesFromData();
+
+      // Filtrar por año y provincia
+      const filteredRaces = allRaces.filter(r => {
+        const matchesYear = r.year === year;
+        const matchesProvince = province === "all" || r.townProvince === province;
+        return matchesYear && matchesProvince;
+      });
+
+      // Quedarse solo con las carreras marcadas por Mikel o Luken
+      const markedRaces = filteredRaces.filter(r => {
+        const raceId = generarRaceId(r.raceName);
+        return estaMarcada(raceId, "mikel") || estaMarcada(raceId, "luken");
+      });
+
+      // Agrupar por mes y día
+      const byMonthDay = {};
+      markedRaces.forEach(r => {
+        if (!r.monthNum || !r.day) return;
+        if (!byMonthDay[r.monthNum]) byMonthDay[r.monthNum] = {};
+        if (!byMonthDay[r.monthNum][r.day]) byMonthDay[r.monthNum][r.day] = [];
+        // Evitar duplicados (misma carrera y mismo día)
+        const exists = byMonthDay[r.monthNum][r.day].some(x => x.raceName === r.raceName);
+        if (!exists) byMonthDay[r.monthNum][r.day].push(r);
+      });
+
+      const yearNum = parseInt(year, 10);
+
+      for (let m = 1; m <= 12; m++) {
+        const monthDiv = document.createElement('div');
+        monthDiv.className = 'wall-month';
+
+        const header = document.createElement('div');
+        header.className = 'wall-month-header';
+        header.textContent = monthNames[m];
+        monthDiv.appendChild(header);
+
+        const weekdays = document.createElement('div');
+        weekdays.className = 'wall-weekdays';
+        wallWeekDays.forEach(d => {
+          const span = document.createElement('span');
+          span.textContent = d;
+          weekdays.appendChild(span);
+        });
+        monthDiv.appendChild(weekdays);
+
+        const daysDiv = document.createElement('div');
+        daysDiv.className = 'wall-days';
+
+        // Calcular primer día de la semana (lunes = 0 ... domingo = 6)
+        const firstDay = new Date(yearNum, m - 1, 1);
+        let firstWeekday = firstDay.getDay(); // 0=Domingo, 1=Lunes...
+        firstWeekday = (firstWeekday + 6) % 7; // Lunes=0, Domingo=6
+
+        // Días del mes
+        const daysInMonth = new Date(yearNum, m, 0).getDate();
+
+        // Celdas vacías iniciales
+        for (let i = 0; i < firstWeekday; i++) {
+          const empty = document.createElement('div');
+          empty.className = 'wall-day empty';
+          daysDiv.appendChild(empty);
+        }
+
+        // Celdas de cada día
+        for (let d = 1; d <= daysInMonth; d++) {
+          const dayDiv = document.createElement('div');
+          dayDiv.className = 'wall-day';
+
+          const numEl = document.createElement('span');
+          numEl.className = 'wall-day-num';
+          numEl.textContent = d;
+          dayDiv.appendChild(numEl);
+
+          const dayRaces = byMonthDay[m] && byMonthDay[m][d];
+          if (dayRaces && dayRaces.length > 0) {
+            // Ordenar por nombre de carrera
+            dayRaces.sort((a, b) => a.raceName.localeCompare(b.raceName));
+            dayRaces.forEach(r => {
+              const raceId = generarRaceId(r.raceName);
+              const mikel = estaMarcada(raceId, "mikel");
+              const luken = estaMarcada(raceId, "luken");
+
+              const raceEl = document.createElement('span');
+              raceEl.className = 'wall-race';
+              if (mikel && luken) raceEl.classList.add('both');
+              else if (mikel) raceEl.classList.add('only-mikel');
+              else if (luken) raceEl.classList.add('only-luken');
+
+              let whoLabel = '';
+              if (mikel && luken) whoLabel = 'M·L';
+              else if (mikel) whoLabel = 'M';
+              else if (luken) whoLabel = 'L';
+
+              raceEl.innerHTML = `${r.raceName}<span class="wall-race-who">${whoLabel}</span>`;
+              raceEl.title = `${r.raceName} — ${r.townTitle} (${whoLabel})`;
+              raceEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectUdalerria(r.townKey);
+              });
+              dayDiv.appendChild(raceEl);
+            });
+          }
+
+          daysDiv.appendChild(dayDiv);
+        }
+
+        monthDiv.appendChild(daysDiv);
+        wallMonthsGrid.appendChild(monthDiv);
+      }
     }
 
     // Buscador en tiempo real
@@ -2370,6 +2679,14 @@
       renderCalendarGrid(searchInput.value, yearSelect.value, e.target.value);
     });
 
+    wallYearSelect.addEventListener('change', (e) => {
+      renderWallCalendar(wallProvinceSelect.value, e.target.value);
+    });
+
+    wallProvinceSelect.addEventListener('change', (e) => {
+      renderWallCalendar(e.target.value, wallYearSelect.value);
+    });
+
     provinceSelect.addEventListener('change', (e) => {
       renderList(searchInput.value, e.target.value);
     });
@@ -2378,48 +2695,53 @@
     /* INICIALIZACIÓN                               */
     /* ============================================ */
     async function init() {
-      // Cargar marcajes primero
       await cargarMarcajes();
-      // Renderizar todo
       renderList(searchInput.value, provinceSelect.value);
       renderCalendarGrid(searchInput.value, yearSelect.value, calendarProvinceSelect.value);
+      renderWallCalendar(wallProvinceSelect.value, wallYearSelect.value);
     }
 
     init();
 
     // Toggle entre Vistas
-    btnMap.addEventListener('click', () => {
-      btnMap.classList.add('active');
-      btnList.classList.remove('active');
-      btnCalendar.classList.remove('active');
+    function setActiveButton(activeBtn) {
+      [btnMap, btnList, btnData, btnWallCalendar].forEach(b => b.classList.remove('active'));
+      activeBtn.classList.add('active');
+    }
 
+    btnMap.addEventListener('click', () => {
+      setActiveButton(btnMap);
       mapContainer.style.display = 'flex';
       listContainer.style.display = 'none';
       calendarContainer.style.display = 'none';
+      wallCalendarContainer.style.display = 'none';
     });
 
     btnList.addEventListener('click', () => {
-      btnList.classList.add('active');
-      btnMap.classList.remove('active');
-      btnCalendar.classList.remove('active');
-
+      setActiveButton(btnList);
       mapContainer.style.display = 'none';
       listContainer.style.display = 'flex';
       calendarContainer.style.display = 'none';
-
+      wallCalendarContainer.style.display = 'none';
       renderList(searchInput.value, provinceSelect.value);
     });
 
-    btnCalendar.addEventListener('click', () => {
-      btnCalendar.classList.add('active');
-      btnMap.classList.remove('active');
-      btnList.classList.remove('active');
-
+    btnData.addEventListener('click', () => {
+      setActiveButton(btnData);
       mapContainer.style.display = 'none';
       listContainer.style.display = 'none';
       calendarContainer.style.display = 'flex';
-
+      wallCalendarContainer.style.display = 'none';
       renderCalendarGrid(searchInput.value, yearSelect.value, calendarProvinceSelect.value);
+    });
+
+    btnWallCalendar.addEventListener('click', () => {
+      setActiveButton(btnWallCalendar);
+      mapContainer.style.display = 'none';
+      listContainer.style.display = 'none';
+      calendarContainer.style.display = 'none';
+      wallCalendarContainer.style.display = 'flex';
+      renderWallCalendar(wallProvinceSelect.value, wallYearSelect.value);
     });
   </script>
 </body>
