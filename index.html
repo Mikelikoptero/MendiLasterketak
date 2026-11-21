@@ -404,7 +404,7 @@
     .wall-calendar-container {
       display: none;
       width: 100%;
-      max-width: 900px;
+      max-width: 1100px;
       height: 100%;
       max-height: calc(100vh - 180px);
       background: var(--card-bg);
@@ -433,21 +433,9 @@
     }
 
     .wall-months-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 900px) {
-      .wall-months-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .wall-months-grid {
-        grid-template-columns: 1fr;
-      }
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
     .wall-month {
@@ -455,14 +443,15 @@
       border-radius: 3px;
       overflow: hidden;
       background: var(--card-bg);
+      width: 100%;
     }
 
     .wall-month-header {
       background: var(--primary-color);
       color: #f5f2eb;
-      padding: 7px 14px;
+      padding: 10px 14px;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 1rem;
       letter-spacing: 0.8px;
       text-transform: uppercase;
       text-align: center;
@@ -476,8 +465,8 @@
     }
 
     .wall-weekdays span {
-      padding: 5px 0;
-      font-size: 0.65rem;
+      padding: 7px 0;
+      font-size: 0.75rem;
       font-weight: 700;
       color: #8c7f73;
       text-align: center;
@@ -491,15 +480,15 @@
     }
 
     .wall-day {
-      min-height: 60px;
-      padding: 3px;
+      min-height: 90px;
+      padding: 5px;
       border-right: 1px solid var(--border-color);
       border-bottom: 1px solid var(--border-color);
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
 
     .wall-day:nth-child(7n) {
@@ -512,7 +501,7 @@
     }
 
     .wall-day-num {
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: #8c7f73;
       align-self: flex-start;
@@ -523,25 +512,25 @@
       background: var(--accent-color);
       color: #faf7f2;
       border-radius: 50%;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.6rem;
+      font-size: 0.7rem;
     }
 
     .wall-race {
       display: block;
-      padding: 2px 4px;
+      padding: 3px 6px;
       border-radius: 2px;
-      font-size: 0.6rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.2;
       text-decoration: none;
       color: var(--primary-color);
       background: var(--bg-color);
-      border-left: 2px solid var(--accent-color);
+      border-left: 3px solid var(--accent-color);
       cursor: pointer;
       transition: background 0.15s ease;
       word-break: break-word;
@@ -566,8 +555,8 @@
     .wall-race-who {
       display: inline-flex;
       gap: 2px;
-      margin-left: 2px;
-      font-size: 0.55rem;
+      margin-left: 4px;
+      font-size: 0.65rem;
       opacity: 0.75;
     }
 
@@ -1017,6 +1006,10 @@
         width: 100%;
         max-height: 70vh;
         border: 1px solid var(--border-color);
+      }
+
+      .wall-day {
+        min-height: 70px;
       }
     }
   </style>
@@ -2564,7 +2557,6 @@
         if (!r.monthNum || !r.day) return;
         if (!byMonthDay[r.monthNum]) byMonthDay[r.monthNum] = {};
         if (!byMonthDay[r.monthNum][r.day]) byMonthDay[r.monthNum][r.day] = [];
-        // Evitar duplicados (misma carrera y mismo día)
         const exists = byMonthDay[r.monthNum][r.day].some(x => x.raceName === r.raceName);
         if (!exists) byMonthDay[r.monthNum][r.day].push(r);
       });
@@ -2597,17 +2589,14 @@
         let firstWeekday = firstDay.getDay(); // 0=Domingo, 1=Lunes...
         firstWeekday = (firstWeekday + 6) % 7; // Lunes=0, Domingo=6
 
-        // Días del mes
         const daysInMonth = new Date(yearNum, m, 0).getDate();
 
-        // Celdas vacías iniciales
         for (let i = 0; i < firstWeekday; i++) {
           const empty = document.createElement('div');
           empty.className = 'wall-day empty';
           daysDiv.appendChild(empty);
         }
 
-        // Celdas de cada día
         for (let d = 1; d <= daysInMonth; d++) {
           const dayDiv = document.createElement('div');
           dayDiv.className = 'wall-day';
@@ -2619,7 +2608,6 @@
 
           const dayRaces = byMonthDay[m] && byMonthDay[m][d];
           if (dayRaces && dayRaces.length > 0) {
-            // Ordenar por nombre de carrera
             dayRaces.sort((a, b) => a.raceName.localeCompare(b.raceName));
             dayRaces.forEach(r => {
               const raceId = generarRaceId(r.raceName);
