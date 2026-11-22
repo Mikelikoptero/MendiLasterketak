@@ -18,6 +18,16 @@
       --map-hover-color: #5b8e7d;
       --map-border-color: #2b3036;
       --instagram-color: #c13584;
+
+      /* 🎨 COLORES PASTEL PARA MARCAJES */
+      --pastel-mikel: #c8e6c9;      /* verde pastel */
+      --pastel-mikel-border: #81c784;
+      --pastel-luken: #bbdefb;      /* azul pastel */
+      --pastel-luken-border: #64b5f6;
+      --pastel-both: #f8bbd0;       /* rosa pastel */
+      --pastel-both-border: #f06292;
+      --pastel-none: #f5f2eb;       /* beige neutro */
+      --pastel-none-border: #dcd6cd;
     }
 
     @media (min-width: 1400px) {
@@ -520,6 +530,7 @@
       font-size: 0.7rem;
     }
 
+    /* 🎨 Carreras en el calendario de pared */
     .wall-race {
       display: block;
       padding: 3px 6px;
@@ -529,27 +540,30 @@
       line-height: 1.2;
       text-decoration: none;
       color: var(--primary-color);
-      background: var(--bg-color);
-      border-left: 3px solid var(--accent-color);
+      background: var(--pastel-none);
+      border-left: 3px solid var(--pastel-none-border);
       cursor: pointer;
       transition: background 0.15s ease;
       word-break: break-word;
     }
 
     .wall-race:hover {
-      background: var(--border-color);
+      filter: brightness(0.95);
     }
 
     .wall-race.only-mikel {
-      border-left-color: var(--accent-color);
+      background: var(--pastel-mikel);
+      border-left-color: var(--pastel-mikel-border);
     }
 
     .wall-race.only-luken {
-      border-left-color: var(--map-hover-color);
+      background: var(--pastel-luken);
+      border-left-color: var(--pastel-luken-border);
     }
 
     .wall-race.both {
-      border-left-color: var(--primary-color);
+      background: var(--pastel-both);
+      border-left-color: var(--pastel-both-border);
     }
 
     .wall-race-who {
@@ -908,15 +922,15 @@
     }
 
     .marcaje-btn.marcada[data-usuario="mikel"] {
-      background: var(--accent-color);
-      color: #faf7f2;
-      border-color: var(--accent-color);
+      background: var(--pastel-mikel);
+      color: #2e7d32;
+      border-color: var(--pastel-mikel-border);
     }
 
     .marcaje-btn.marcada[data-usuario="luken"] {
-      background: var(--map-hover-color);
-      color: #faf7f2;
-      border-color: var(--map-hover-color);
+      background: var(--pastel-luken);
+      color: #1565c0;
+      border-color: var(--pastel-luken-border);
     }
 
     /* En la lista del egutegio, alinear a la derecha */
@@ -2545,15 +2559,9 @@
         return matchesYear && matchesProvince;
       });
 
-      // Quedarse solo con las carreras marcadas por Mikel o Luken
-      const markedRaces = filteredRaces.filter(r => {
-        const raceId = generarRaceId(r.raceName);
-        return estaMarcada(raceId, "mikel") || estaMarcada(raceId, "luken");
-      });
-
-      // Agrupar por mes y día
+      // Agrupar todas las carreras por mes y día
       const byMonthDay = {};
-      markedRaces.forEach(r => {
+      filteredRaces.forEach(r => {
         if (!r.monthNum || !r.day) return;
         if (!byMonthDay[r.monthNum]) byMonthDay[r.monthNum] = {};
         if (!byMonthDay[r.monthNum][r.day]) byMonthDay[r.monthNum][r.day] = [];
@@ -2586,8 +2594,8 @@
 
         // Calcular primer día de la semana (lunes = 0 ... domingo = 6)
         const firstDay = new Date(yearNum, m - 1, 1);
-        let firstWeekday = firstDay.getDay(); // 0=Domingo, 1=Lunes...
-        firstWeekday = (firstWeekday + 6) % 7; // Lunes=0, Domingo=6
+        let firstWeekday = firstDay.getDay();
+        firstWeekday = (firstWeekday + 6) % 7;
 
         const daysInMonth = new Date(yearNum, m, 0).getDate();
 
@@ -2616,17 +2624,28 @@
 
               const raceEl = document.createElement('span');
               raceEl.className = 'wall-race';
-              if (mikel && luken) raceEl.classList.add('both');
-              else if (mikel) raceEl.classList.add('only-mikel');
-              else if (luken) raceEl.classList.add('only-luken');
+
+              // Colores: verde (Mikel), azul (Luken), rosa (ambos), neutro (ninguno)
+              if (mikel && luken) {
+                raceEl.classList.add('both');
+              } else if (mikel) {
+                raceEl.classList.add('only-mikel');
+              } else if (luken) {
+                raceEl.classList.add('only-luken');
+              }
 
               let whoLabel = '';
               if (mikel && luken) whoLabel = 'M·L';
               else if (mikel) whoLabel = 'M';
               else if (luken) whoLabel = 'L';
 
-              raceEl.innerHTML = `${r.raceName}<span class="wall-race-who">${whoLabel}</span>`;
-              raceEl.title = `${r.raceName} — ${r.townTitle} (${whoLabel})`;
+              if (whoLabel) {
+                raceEl.innerHTML = `${r.raceName}<span class="wall-race-who">${whoLabel}</span>`;
+              } else {
+                raceEl.textContent = r.raceName;
+              }
+
+              raceEl.title = `${r.raceName} — ${r.townTitle}${whoLabel ? ` (${whoLabel})` : ''}`;
               raceEl.addEventListener('click', (e) => {
                 e.stopPropagation();
                 selectUdalerria(r.townKey);
